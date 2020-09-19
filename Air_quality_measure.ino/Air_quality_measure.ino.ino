@@ -20,9 +20,9 @@ float humi;
 float temp;
 SoftwareSerial mySerial(2,3); // RX,TX
 
-String ssid = "MK1";
-String Pass = "ansrl123";
-String host = "54.237.101.189";
+String ssid = "";
+String Pass = "";
+String host = "";
 
 void connectWifi(){
   
