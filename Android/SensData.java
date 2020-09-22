@@ -1,4 +1,4 @@
-package com.example.arduino;
+package com.example.Android;
 import java.lang.*;
 
 public class SensData {

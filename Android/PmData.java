@@ -1,4 +1,4 @@
-package com.example.arduino;
+package com.example.Android;
 
 public class PmData {
     public static String sido;

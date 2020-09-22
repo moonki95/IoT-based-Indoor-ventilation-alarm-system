@@ -1,4 +1,4 @@
-package com.example.arduino;
+package com.example.Android;
 
 import android.content.ContentValues;
 import java.io.BufferedReader;

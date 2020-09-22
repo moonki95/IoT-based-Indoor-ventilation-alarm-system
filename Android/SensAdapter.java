@@ -1,4 +1,4 @@
-package com.example.arduino;
+package com.example.Android;
 
 import android.app.Activity;
 import androidx.annotation.NonNull;
