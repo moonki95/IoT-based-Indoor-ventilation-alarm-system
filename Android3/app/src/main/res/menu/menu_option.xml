@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_indoor"
+        android:title="실내공기 확인"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_weather"
+        android:title="날씨"
+        app:showAsAction="never"/>
+</menu>
