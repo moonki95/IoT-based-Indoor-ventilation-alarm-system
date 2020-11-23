@@ -1,0 +1,140 @@
+<html>
+<head>
+<title>Air_quality_measure.ino.ino</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #bbb529;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+.s4 { color: #808080;}
+.s5 { color: #cc7832;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Air_quality_measure.ino.ino</font>
+</center></td></tr></table>
+<pre><span class="s0">#include </span><span class="s2">&lt;DHT.h&gt;</span>
+<span class="s0">#include </span><span class="s2">&lt;SoftwareSerial.h&gt;</span>
+<span class="s0">#define </span><span class="s1">DHTPIN </span><span class="s3">6      </span><span class="s4">// DHT핀을 2번으로 정의한다(DATA핀)</span>
+<span class="s0">#define </span><span class="s1">DHTTYPE DHT11  </span><span class="s4">// DHT타입을 DHT11로 정의한다</span>
+<span class="s1">DHT dht(DHTPIN</span><span class="s5">, </span><span class="s1">DHTTYPE)</span><span class="s5">;  </span><span class="s4">// DHT설정 - dht (디지털2, dht11)</span>
+
+<span class="s5">int </span><span class="s1">Vo = A1</span><span class="s5">; </span><span class="s4">// </span>
+<span class="s5">int </span><span class="s1">V_LED = </span><span class="s3">12</span><span class="s5">;</span>
+<span class="s5">float </span><span class="s1">Vo_value = </span><span class="s3">0</span><span class="s5">;</span>
+<span class="s5">float </span><span class="s1">Voltage = </span><span class="s3">0</span><span class="s5">;</span>
+
+<span class="s5">float </span><span class="s1">dustDensity = </span><span class="s3">0</span><span class="s5">;</span>
+<span class="s5">float </span><span class="s1">dustCleanVoltage = </span><span class="s3">0.44</span><span class="s5">;</span>
+<span class="s5">int </span><span class="s1">samplingTime = </span><span class="s3">280</span><span class="s5">;</span>
+<span class="s5">int </span><span class="s1">deltaTime = </span><span class="s3">40</span><span class="s5">;</span>
+<span class="s5">int </span><span class="s1">sleepTime = </span><span class="s3">9680</span><span class="s5">;</span>
+
+
+<span class="s5">float </span><span class="s1">humi</span><span class="s5">;</span>
+<span class="s5">float </span><span class="s1">temp</span><span class="s5">;</span>
+<span class="s1">SoftwareSerial mySerial(</span><span class="s3">2</span><span class="s5">,</span><span class="s3">3</span><span class="s1">)</span><span class="s5">; </span><span class="s4">// RX,TX</span>
+
+<span class="s1">String ssid = </span><span class="s2">&quot;&quot;</span><span class="s5">;</span>
+<span class="s1">String Pass = </span><span class="s2">&quot;&quot;</span><span class="s5">;</span>
+<span class="s1">String host = </span><span class="s2">&quot;&quot;</span><span class="s5">;</span>
+
+<span class="s5">void </span><span class="s1">connectWifi(){</span>
+  
+ <span class="s1">String m_reset = </span><span class="s2">&quot;AT+RST&quot;</span><span class="s5">;</span>
+ <span class="s1">mySerial.println(m_reset)</span><span class="s5">;</span>
+ <span class="s1">String join = </span><span class="s2">&quot;AT+CWJAP=</span><span class="s5">\&quot;</span><span class="s2">&quot;</span><span class="s1">+ssid+</span><span class="s2">&quot;</span><span class="s5">\&quot;</span><span class="s2">,</span><span class="s5">\&quot;</span><span class="s2">&quot;</span><span class="s1">+Pass+</span><span class="s2">&quot;</span><span class="s5">\&quot;</span><span class="s2">&quot;</span><span class="s5">;</span>
+ <span class="s1">Serial.println(</span><span class="s2">&quot;Connect Wifi...&quot;</span><span class="s1">)</span><span class="s5">;</span>
+ <span class="s1">mySerial.println(join)</span><span class="s5">;</span>
+ <span class="s1">delay(</span><span class="s3">10000</span><span class="s1">)</span><span class="s5">;</span>
+ <span class="s5">if</span><span class="s1">(mySerial.find(</span><span class="s2">&quot;OK&quot;</span><span class="s1">)){</span>
+   <span class="s1">Serial.print(</span><span class="s2">&quot;WIFI connect</span><span class="s5">\n</span><span class="s2">&quot;</span><span class="s1">)</span><span class="s5">;</span>
+ <span class="s1">}</span>
+ <span class="s5">else</span><span class="s1">{</span>
+   <span class="s1">Serial.println(</span><span class="s2">&quot;Connect timeout</span><span class="s5">\n</span><span class="s2">&quot;</span><span class="s1">)</span><span class="s5">;</span>
+ <span class="s1">}</span>
+ <span class="s1">delay(</span><span class="s3">1000</span><span class="s1">)</span><span class="s5">;</span>
+<span class="s1">}</span>
+
+<span class="s5">void </span><span class="s1">httpclient(String char_input){</span>
+  <span class="s1">delay(</span><span class="s3">100</span><span class="s1">)</span><span class="s5">;</span>
+  <span class="s1">Serial.println(</span><span class="s2">&quot;connect TCP...&quot;</span><span class="s1">)</span><span class="s5">;</span>
+  <span class="s1">mySerial.println(</span><span class="s2">&quot;AT+CIPSTART=</span><span class="s5">\&quot;</span><span class="s2">TCP</span><span class="s5">\&quot;</span><span class="s2">,</span><span class="s5">\&quot;</span><span class="s2">&quot;</span><span class="s1">+host+</span><span class="s2">&quot;</span><span class="s5">\&quot;</span><span class="s2">,80&quot;</span><span class="s1">)</span><span class="s5">;</span>
+  <span class="s1">delay(</span><span class="s3">500</span><span class="s1">)</span><span class="s5">;</span>
+  <span class="s5">if</span><span class="s1">(Serial.find(</span><span class="s2">&quot;ERROR&quot;</span><span class="s1">))</span>
+    <span class="s5">return;</span>
+  <span class="s1">Serial.println(</span><span class="s2">&quot;Send data...&quot;</span><span class="s1">)</span><span class="s5">;</span>
+  <span class="s1">String url=char_input</span><span class="s5">;</span>
+  <span class="s1">String cmd=</span><span class="s2">&quot;GET /sensor2.php?temp=&quot;</span><span class="s1">+url+</span><span class="s2">&quot; HTTP/1.0</span><span class="s5">\r\n\r\n</span><span class="s2">&quot;</span><span class="s5">;</span>
+  <span class="s1">mySerial.print(</span><span class="s2">&quot;AT+CIPSEND=&quot;</span><span class="s1">)</span><span class="s5">;</span>
+  <span class="s1">mySerial.println(cmd.length())</span><span class="s5">;</span>
+  <span class="s1">Serial.print(</span><span class="s2">&quot;AT+CIPSEND=&quot;</span><span class="s1">)</span><span class="s5">;</span>
+  <span class="s1">Serial.println(cmd.length())</span><span class="s5">;</span>
+  <span class="s5">if</span><span class="s1">(mySerial.find(</span><span class="s2">&quot;&gt;&quot;</span><span class="s1">)){</span>
+    <span class="s1">Serial.print(</span><span class="s2">&quot;&gt;&quot;</span><span class="s1">)</span><span class="s5">;</span>
+  <span class="s1">}</span>
+  <span class="s5">else</span><span class="s1">{</span>
+    <span class="s1">mySerial.println(</span><span class="s2">&quot;AT+CIPCLOSE&quot;</span><span class="s1">)</span><span class="s5">;</span>
+    <span class="s1">Serial.println(</span><span class="s2">&quot;connect timeout&quot;</span><span class="s1">)</span><span class="s5">;</span>
+    <span class="s1">delay(</span><span class="s3">1000</span><span class="s1">)</span><span class="s5">;</span>
+    <span class="s5">return;</span>
+  <span class="s1">}</span>
+  <span class="s1">delay(</span><span class="s3">500</span><span class="s1">)</span><span class="s5">;</span>
+
+  <span class="s1">mySerial.println(cmd)</span><span class="s5">;</span>
+  <span class="s1">Serial.println(cmd)</span><span class="s5">;</span>
+  <span class="s1">delay(</span><span class="s3">100</span><span class="s1">)</span><span class="s5">;</span>
+  <span class="s5">if</span><span class="s1">(Serial.find(</span><span class="s2">&quot;ERROR&quot;</span><span class="s1">)){</span>
+    <span class="s5">return;</span>
+  <span class="s1">}</span>
+  <span class="s1">mySerial.println(</span><span class="s2">&quot;AT+CIPCLOSE&quot;</span><span class="s1">)</span><span class="s5">;</span>
+  <span class="s1">delay(</span><span class="s3">100</span><span class="s1">)</span><span class="s5">;</span>
+<span class="s1">}</span>
+
+<span class="s5">void </span><span class="s1">setup(){</span>
+  <span class="s1">Serial.begin(</span><span class="s3">9600</span><span class="s1">)</span><span class="s5">;</span>
+  <span class="s1">mySerial.begin(</span><span class="s3">9600</span><span class="s1">)</span><span class="s5">;</span>
+  <span class="s1">pinMode(V_LED</span><span class="s5">, </span><span class="s1">OUTPUT)</span><span class="s5">;</span>
+  <span class="s4">/*analog input:*/</span>
+  <span class="s1">pinMode(Vo</span><span class="s5">, </span><span class="s1">INPUT)</span><span class="s5">;</span>
+  <span class="s1">connectWifi()</span><span class="s5">;</span>
+  <span class="s1">delay(</span><span class="s3">500</span><span class="s1">)</span><span class="s5">;</span>
+<span class="s1">}</span>
+
+<span class="s5">void </span><span class="s1">loop(){</span>
+  <span class="s1">digitalWrite(V_LED</span><span class="s5">,</span><span class="s1">LOW)</span><span class="s5">; </span><span class="s4">//ired 'on'</span>
+  <span class="s1">delayMicroseconds(samplingTime)</span><span class="s5">;</span>
+  <span class="s1">Vo_value = analogRead(Vo)</span><span class="s5">; </span><span class="s4">//read the dust value</span>
+  <span class="s1">delayMicroseconds(deltaTime)</span><span class="s5">;</span><span class="s4">// pulse width 0.32 - 0.28 = 0.04 msec</span>
+  <span class="s4">//0.32 msec의 펄스폭을 유지하기 위해 필요한 코드입니다</span>
+  
+  <span class="s1">digitalWrite(V_LED</span><span class="s5">,</span><span class="s1">HIGH)</span><span class="s5">; </span><span class="s4">//ired 'off'</span>
+  <span class="s1">delayMicroseconds(sleepTime)</span><span class="s5">;</span>
+
+  <span class="s1">Voltage = Vo_value * (</span><span class="s3">5.0 </span><span class="s1">/ </span><span class="s3">1024.0</span><span class="s1">)</span><span class="s5">;</span>
+  <span class="s1">dustDensity = (Voltage - dustCleanVoltage)/</span><span class="s3">0.005</span><span class="s5">;</span>
+  <span class="s1">humi = dht.readHumidity()</span><span class="s5">;</span>
+  <span class="s1">temp = dht.readTemperature()</span><span class="s5">;</span>
+  <span class="s1">String str_output = String(temp)+</span><span class="s2">&quot;&amp;humi=&quot;</span><span class="s1">+String(humi)+</span><span class="s2">&quot;&amp;dustDensity=&quot;</span><span class="s1">+String(dustDensity)</span><span class="s5">;</span>
+  <span class="s1">delay(</span><span class="s3">1000</span><span class="s1">)</span><span class="s5">;</span>
+  <span class="s1">httpclient(str_output)</span><span class="s5">;</span>
+  <span class="s1">delay(</span><span class="s3">1000</span><span class="s1">)</span><span class="s5">;</span>
+
+  <span class="s5">while</span><span class="s1">(mySerial.available()){</span>
+    <span class="s5">char </span><span class="s1">response = mySerial.read()</span><span class="s5">;</span>
+    <span class="s1">Serial.write(response)</span><span class="s5">;</span>
+    <span class="s5">if</span><span class="s1">(response==</span><span class="s2">'</span><span class="s5">\r</span><span class="s2">'</span><span class="s1">){</span>
+      <span class="s1">Serial.println(</span><span class="s2">&quot;</span><span class="s5">\n</span><span class="s2">&quot;</span><span class="s1">)</span><span class="s5">;</span>
+    <span class="s1">}</span>
+  <span class="s1">}</span>
+  <span class="s1">Serial.println(</span><span class="s2">&quot;</span><span class="s5">\n</span><span class="s2">===========================</span><span class="s5">\n</span><span class="s2">&quot;</span><span class="s1">)</span><span class="s5">;</span>
+  <span class="s1">delay(</span><span class="s3">2000</span><span class="s1">)</span><span class="s5">;</span>
+  
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

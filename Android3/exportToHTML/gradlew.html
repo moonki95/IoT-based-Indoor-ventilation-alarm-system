@@ -1,0 +1,196 @@
+<html>
+<head>
+<title>gradlew</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #a9b7c6; font-weight: bold;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6a8759;}
+.s4 { color: #a9b7c6;}
+.s5 { color: #cc7832;}
+.s6 { color: #c57633;}
+.s7 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+gradlew</font>
+</center></td></tr></table>
+<pre><span class="s0">#!/usr/bin/env sh 
+</span>
+<span class="s2">##############################################################################</span>
+<span class="s2">##</span>
+<span class="s2">##  Gradle start up script for UN*X</span>
+<span class="s2">##</span>
+<span class="s2">##############################################################################</span>
+
+<span class="s2"># Attempt to set APP_HOME</span>
+<span class="s2"># Resolve links: $0 may be a link</span>
+<span class="s1">PRG=</span><span class="s3">&quot;</span><span class="s4">$0</span><span class="s3">&quot;</span>
+<span class="s2"># Need this for relative symlinks.</span>
+<span class="s5">while </span><span class="s1">[ -h </span><span class="s3">&quot;</span><span class="s4">$PRG</span><span class="s3">&quot; </span><span class="s1">] ; </span><span class="s5">do</span>
+    <span class="s1">ls=</span><span class="s6">`</span><span class="s1">ls -ld </span><span class="s3">&quot;</span><span class="s4">$PRG</span><span class="s3">&quot;</span><span class="s6">`</span>
+    <span class="s1">link=</span><span class="s6">`</span><span class="s1">expr </span><span class="s3">&quot;</span><span class="s4">$ls</span><span class="s3">&quot; </span><span class="s1">: </span><span class="s3">'.*-&gt; \(.*\)$'</span><span class="s6">`</span>
+    <span class="s5">if </span><span class="s1">expr </span><span class="s3">&quot;</span><span class="s4">$link</span><span class="s3">&quot; </span><span class="s1">: </span><span class="s3">'/.*' </span><span class="s5">&gt; </span><span class="s1">/dev/null; </span><span class="s5">then</span>
+        <span class="s1">PRG=</span><span class="s3">&quot;</span><span class="s4">$link</span><span class="s3">&quot;</span>
+    <span class="s5">else</span>
+        <span class="s1">PRG=</span><span class="s6">`</span><span class="s1">dirname </span><span class="s3">&quot;</span><span class="s4">$PRG</span><span class="s3">&quot;</span><span class="s6">`</span><span class="s3">&quot;/</span><span class="s4">$link</span><span class="s3">&quot;</span>
+    <span class="s5">fi</span>
+<span class="s5">done</span>
+<span class="s1">SAVED=</span><span class="s3">&quot;</span><span class="s6">`</span><span class="s1">pwd</span><span class="s6">`</span><span class="s3">&quot;</span>
+<span class="s1">cd </span><span class="s3">&quot;</span><span class="s6">`</span><span class="s1">dirname \&quot;</span><span class="s4">$PRG</span><span class="s1">\&quot;</span><span class="s6">`</span><span class="s3">/&quot; </span><span class="s5">&gt;</span><span class="s1">/dev/null</span>
+<span class="s1">APP_HOME=</span><span class="s3">&quot;</span><span class="s6">`</span><span class="s1">pwd -P</span><span class="s6">`</span><span class="s3">&quot;</span>
+<span class="s1">cd </span><span class="s3">&quot;</span><span class="s4">$SAVED</span><span class="s3">&quot; </span><span class="s5">&gt;</span><span class="s1">/dev/null</span>
+
+<span class="s1">APP_NAME=</span><span class="s3">&quot;Gradle&quot;</span>
+<span class="s1">APP_BASE_NAME=</span><span class="s6">`</span><span class="s1">basename </span><span class="s3">&quot;</span><span class="s4">$0</span><span class="s3">&quot;</span><span class="s6">`</span>
+
+<span class="s2"># Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.</span>
+<span class="s1">DEFAULT_JVM_OPTS=</span><span class="s3">&quot;&quot;</span>
+
+<span class="s2"># Use the maximum available, or set MAX_FD != -1 to use that value.</span>
+<span class="s1">MAX_FD=</span><span class="s3">&quot;maximum&quot;</span>
+
+<span class="s1">warn () {</span>
+    <span class="s1">echo </span><span class="s3">&quot;</span><span class="s4">$*</span><span class="s3">&quot;</span>
+<span class="s1">}</span>
+
+<span class="s1">die () {</span>
+    <span class="s1">echo</span>
+    <span class="s1">echo </span><span class="s3">&quot;</span><span class="s4">$*</span><span class="s3">&quot;</span>
+    <span class="s1">echo</span>
+    <span class="s1">exit </span><span class="s7">1</span>
+<span class="s1">}</span>
+
+<span class="s2"># OS specific support (must be 'true' or 'false').</span>
+<span class="s1">cygwin=false</span>
+<span class="s1">msys=false</span>
+<span class="s1">darwin=false</span>
+<span class="s1">nonstop=false</span>
+<span class="s5">case </span><span class="s3">&quot;</span><span class="s6">`</span><span class="s1">uname</span><span class="s6">`</span><span class="s3">&quot; </span><span class="s5">in</span>
+  <span class="s1">CYGWIN* )</span>
+    <span class="s1">cygwin=true</span>
+    <span class="s5">;;</span>
+  <span class="s1">Darwin* )</span>
+    <span class="s1">darwin=true</span>
+    <span class="s5">;;</span>
+  <span class="s1">MINGW* )</span>
+    <span class="s1">msys=true</span>
+    <span class="s5">;;</span>
+  <span class="s1">NONSTOP* )</span>
+    <span class="s1">nonstop=true</span>
+    <span class="s5">;;</span>
+<span class="s5">esac</span>
+
+<span class="s1">CLASSPATH=</span><span class="s4">$APP_HOME</span><span class="s1">/gradle/wrapper/gradle-wrapper.jar</span>
+
+<span class="s2"># Determine the Java command to use to start the JVM.</span>
+<span class="s5">if </span><span class="s1">[ -n </span><span class="s3">&quot;</span><span class="s4">$JAVA_HOME</span><span class="s3">&quot; </span><span class="s1">] ; </span><span class="s5">then</span>
+    <span class="s5">if </span><span class="s1">[ -x </span><span class="s3">&quot;</span><span class="s4">$JAVA_HOME</span><span class="s3">/jre/sh/java&quot; </span><span class="s1">] ; </span><span class="s5">then</span>
+        <span class="s2"># IBM's JDK on AIX uses strange locations for the executables</span>
+        <span class="s1">JAVACMD=</span><span class="s3">&quot;</span><span class="s4">$JAVA_HOME</span><span class="s3">/jre/sh/java&quot;</span>
+    <span class="s5">else</span>
+        <span class="s1">JAVACMD=</span><span class="s3">&quot;</span><span class="s4">$JAVA_HOME</span><span class="s3">/bin/java&quot;</span>
+    <span class="s5">fi</span>
+    <span class="s5">if </span><span class="s1">[ </span><span class="s5">! </span><span class="s1">-x </span><span class="s3">&quot;</span><span class="s4">$JAVACMD</span><span class="s3">&quot; </span><span class="s1">] ; </span><span class="s5">then</span>
+        <span class="s1">die </span><span class="s3">&quot;ERROR: JAVA_HOME is set to an invalid directory: </span><span class="s4">$JAVA_HOME</span>
+
+<span class="s3">Please set the JAVA_HOME variable in your environment to match the 
+location of your Java installation.&quot;</span>
+    <span class="s5">fi</span>
+<span class="s5">else</span>
+    <span class="s1">JAVACMD=</span><span class="s3">&quot;java&quot;</span>
+    <span class="s1">which java </span><span class="s5">&gt;</span><span class="s1">/dev/null </span><span class="s7">2</span><span class="s1">&gt;&amp;</span><span class="s7">1 </span><span class="s5">|| </span><span class="s1">die </span><span class="s3">&quot;ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH. 
+ 
+Please set the JAVA_HOME variable in your environment to match the 
+location of your Java installation.&quot;</span>
+<span class="s5">fi</span>
+
+<span class="s2"># Increase the maximum file descriptors if we can.</span>
+<span class="s5">if </span><span class="s1">[ </span><span class="s3">&quot;</span><span class="s4">$cygwin</span><span class="s3">&quot; </span><span class="s1">= </span><span class="s3">&quot;false&quot; </span><span class="s1">-a </span><span class="s3">&quot;</span><span class="s4">$darwin</span><span class="s3">&quot; </span><span class="s1">= </span><span class="s3">&quot;false&quot; </span><span class="s1">-a </span><span class="s3">&quot;</span><span class="s4">$nonstop</span><span class="s3">&quot; </span><span class="s1">= </span><span class="s3">&quot;false&quot; </span><span class="s1">] ; </span><span class="s5">then</span>
+    <span class="s1">MAX_FD_LIMIT=</span><span class="s6">`</span><span class="s1">ulimit -H -n</span><span class="s6">`</span>
+    <span class="s5">if </span><span class="s1">[ </span><span class="s4">$? </span><span class="s1">-eq </span><span class="s7">0 </span><span class="s1">] ; </span><span class="s5">then</span>
+        <span class="s5">if </span><span class="s1">[ </span><span class="s3">&quot;</span><span class="s4">$MAX_FD</span><span class="s3">&quot; </span><span class="s1">= </span><span class="s3">&quot;maximum&quot; </span><span class="s1">-o </span><span class="s3">&quot;</span><span class="s4">$MAX_FD</span><span class="s3">&quot; </span><span class="s1">= </span><span class="s3">&quot;max&quot; </span><span class="s1">] ; </span><span class="s5">then</span>
+            <span class="s1">MAX_FD=</span><span class="s3">&quot;</span><span class="s4">$MAX_FD_LIMIT</span><span class="s3">&quot;</span>
+        <span class="s5">fi</span>
+        <span class="s1">ulimit -n </span><span class="s4">$MAX_FD</span>
+        <span class="s5">if </span><span class="s1">[ </span><span class="s4">$? </span><span class="s1">-ne </span><span class="s7">0 </span><span class="s1">] ; </span><span class="s5">then</span>
+            <span class="s1">warn </span><span class="s3">&quot;Could not set maximum file descriptor limit: </span><span class="s4">$MAX_FD</span><span class="s3">&quot;</span>
+        <span class="s5">fi</span>
+    <span class="s5">else</span>
+        <span class="s1">warn </span><span class="s3">&quot;Could not query maximum file descriptor limit: </span><span class="s4">$MAX_FD_LIMIT</span><span class="s3">&quot;</span>
+    <span class="s5">fi</span>
+<span class="s5">fi</span>
+
+<span class="s2"># For Darwin, add options to specify how the application appears in the dock</span>
+<span class="s5">if </span><span class="s4">$darwin</span><span class="s1">; </span><span class="s5">then</span>
+    <span class="s1">GRADLE_OPTS=</span><span class="s3">&quot;</span><span class="s4">$GRADLE_OPTS </span><span class="s3">\&quot;-Xdock:name=</span><span class="s4">$APP_NAME</span><span class="s3">\&quot; \&quot;-Xdock:icon=</span><span class="s4">$APP_HOME</span><span class="s3">/media/gradle.icns\&quot;&quot;</span>
+<span class="s5">fi</span>
+
+<span class="s2"># For Cygwin, switch paths to Windows format before running java</span>
+<span class="s5">if </span><span class="s4">$cygwin </span><span class="s1">; </span><span class="s5">then</span>
+    <span class="s1">APP_HOME=</span><span class="s6">`</span><span class="s1">cygpath --path --mixed </span><span class="s3">&quot;</span><span class="s4">$APP_HOME</span><span class="s3">&quot;</span><span class="s6">`</span>
+    <span class="s1">CLASSPATH=</span><span class="s6">`</span><span class="s1">cygpath --path --mixed </span><span class="s3">&quot;</span><span class="s4">$CLASSPATH</span><span class="s3">&quot;</span><span class="s6">`</span>
+    <span class="s1">JAVACMD=</span><span class="s6">`</span><span class="s1">cygpath --unix </span><span class="s3">&quot;</span><span class="s4">$JAVACMD</span><span class="s3">&quot;</span><span class="s6">`</span>
+
+    <span class="s2"># We build the pattern for arguments to be converted via cygpath</span>
+    <span class="s1">ROOTDIRSRAW=</span><span class="s6">`</span><span class="s1">find -L / -maxdepth </span><span class="s7">1 </span><span class="s1">-mindepth </span><span class="s7">1 </span><span class="s1">-type d </span><span class="s7">2</span><span class="s5">&gt;</span><span class="s1">/dev/null</span><span class="s6">`</span>
+    <span class="s1">SEP=</span><span class="s3">&quot;&quot;</span>
+    <span class="s5">for </span><span class="s1">dir in </span><span class="s4">$ROOTDIRSRAW </span><span class="s1">; </span><span class="s5">do</span>
+        <span class="s1">ROOTDIRS=</span><span class="s3">&quot;</span><span class="s4">$ROOTDIRS$SEP$dir</span><span class="s3">&quot;</span>
+        <span class="s1">SEP=</span><span class="s3">&quot;|&quot;</span>
+    <span class="s5">done</span>
+    <span class="s1">OURCYGPATTERN=</span><span class="s3">&quot;(^(</span><span class="s4">$ROOTDIRS</span><span class="s3">))&quot;</span>
+    <span class="s2"># Add a user-defined pattern to the cygpath arguments</span>
+    <span class="s5">if </span><span class="s1">[ </span><span class="s3">&quot;</span><span class="s4">$GRADLE_CYGPATTERN</span><span class="s3">&quot; </span><span class="s1">!= </span><span class="s3">&quot;&quot; </span><span class="s1">] ; </span><span class="s5">then</span>
+        <span class="s1">OURCYGPATTERN=</span><span class="s3">&quot;</span><span class="s4">$OURCYGPATTERN</span><span class="s3">|(</span><span class="s4">$GRADLE_CYGPATTERN</span><span class="s3">)&quot;</span>
+    <span class="s5">fi</span>
+    <span class="s2"># Now convert the arguments - kludge to limit ourselves to /bin/sh</span>
+    <span class="s1">i=</span><span class="s7">0</span>
+    <span class="s5">for </span><span class="s1">arg in </span><span class="s3">&quot;</span><span class="s4">$@</span><span class="s3">&quot; </span><span class="s1">; </span><span class="s5">do</span>
+        <span class="s1">CHECK=</span><span class="s6">`</span><span class="s1">echo </span><span class="s3">&quot;</span><span class="s4">$arg</span><span class="s3">&quot;</span><span class="s1">|egrep -c </span><span class="s3">&quot;</span><span class="s4">$OURCYGPATTERN</span><span class="s3">&quot; </span><span class="s1">-</span><span class="s6">`</span>
+        <span class="s1">CHECK2=</span><span class="s6">`</span><span class="s1">echo </span><span class="s3">&quot;</span><span class="s4">$arg</span><span class="s3">&quot;</span><span class="s1">|egrep -c </span><span class="s3">&quot;^-&quot;</span><span class="s6">`                                 </span><span class="s2">### Determine if an option</span>
+
+        <span class="s5">if </span><span class="s1">[ </span><span class="s4">$CHECK </span><span class="s1">-ne </span><span class="s7">0 </span><span class="s1">] </span><span class="s5">&amp;&amp; </span><span class="s1">[ </span><span class="s4">$CHECK2 </span><span class="s1">-eq </span><span class="s7">0 </span><span class="s1">] ; </span><span class="s5">then                    </span><span class="s2">### Added a condition</span>
+            <span class="s6">eval `</span><span class="s1">echo args</span><span class="s4">$i</span><span class="s6">`</span><span class="s1">=</span><span class="s6">`</span><span class="s1">cygpath --path --ignore --mixed </span><span class="s3">&quot;</span><span class="s4">$arg</span><span class="s3">&quot;</span><span class="s6">`</span>
+        <span class="s5">else</span>
+            <span class="s6">eval `</span><span class="s1">echo args</span><span class="s4">$i</span><span class="s6">`</span><span class="s1">=</span><span class="s3">&quot;\&quot;</span><span class="s4">$arg</span><span class="s3">\&quot;&quot;</span>
+        <span class="s5">fi</span>
+        <span class="s1">i=</span><span class="s5">$((</span><span class="s1">i+</span><span class="s7">1</span><span class="s5">))</span>
+    <span class="s5">done</span>
+    <span class="s5">case </span><span class="s4">$i </span><span class="s5">in</span>
+        <span class="s1">(0) set -- </span><span class="s5">;;</span>
+        <span class="s1">(1) set -- </span><span class="s3">&quot;</span><span class="s4">$args0</span><span class="s3">&quot; </span><span class="s5">;;</span>
+        <span class="s1">(2) set -- </span><span class="s3">&quot;</span><span class="s4">$args0</span><span class="s3">&quot; &quot;</span><span class="s4">$args1</span><span class="s3">&quot; </span><span class="s5">;;</span>
+        <span class="s1">(3) set -- </span><span class="s3">&quot;</span><span class="s4">$args0</span><span class="s3">&quot; &quot;</span><span class="s4">$args1</span><span class="s3">&quot; &quot;</span><span class="s4">$args2</span><span class="s3">&quot; </span><span class="s5">;;</span>
+        <span class="s1">(4) set -- </span><span class="s3">&quot;</span><span class="s4">$args0</span><span class="s3">&quot; &quot;</span><span class="s4">$args1</span><span class="s3">&quot; &quot;</span><span class="s4">$args2</span><span class="s3">&quot; &quot;</span><span class="s4">$args3</span><span class="s3">&quot; </span><span class="s5">;;</span>
+        <span class="s1">(5) set -- </span><span class="s3">&quot;</span><span class="s4">$args0</span><span class="s3">&quot; &quot;</span><span class="s4">$args1</span><span class="s3">&quot; &quot;</span><span class="s4">$args2</span><span class="s3">&quot; &quot;</span><span class="s4">$args3</span><span class="s3">&quot; &quot;</span><span class="s4">$args4</span><span class="s3">&quot; </span><span class="s5">;;</span>
+        <span class="s1">(6) set -- </span><span class="s3">&quot;</span><span class="s4">$args0</span><span class="s3">&quot; &quot;</span><span class="s4">$args1</span><span class="s3">&quot; &quot;</span><span class="s4">$args2</span><span class="s3">&quot; &quot;</span><span class="s4">$args3</span><span class="s3">&quot; &quot;</span><span class="s4">$args4</span><span class="s3">&quot; &quot;</span><span class="s4">$args5</span><span class="s3">&quot; </span><span class="s5">;;</span>
+        <span class="s1">(7) set -- </span><span class="s3">&quot;</span><span class="s4">$args0</span><span class="s3">&quot; &quot;</span><span class="s4">$args1</span><span class="s3">&quot; &quot;</span><span class="s4">$args2</span><span class="s3">&quot; &quot;</span><span class="s4">$args3</span><span class="s3">&quot; &quot;</span><span class="s4">$args4</span><span class="s3">&quot; &quot;</span><span class="s4">$args5</span><span class="s3">&quot; &quot;</span><span class="s4">$args6</span><span class="s3">&quot; </span><span class="s5">;;</span>
+        <span class="s1">(8) set -- </span><span class="s3">&quot;</span><span class="s4">$args0</span><span class="s3">&quot; &quot;</span><span class="s4">$args1</span><span class="s3">&quot; &quot;</span><span class="s4">$args2</span><span class="s3">&quot; &quot;</span><span class="s4">$args3</span><span class="s3">&quot; &quot;</span><span class="s4">$args4</span><span class="s3">&quot; &quot;</span><span class="s4">$args5</span><span class="s3">&quot; &quot;</span><span class="s4">$args6</span><span class="s3">&quot; &quot;</span><span class="s4">$args7</span><span class="s3">&quot; </span><span class="s5">;;</span>
+        <span class="s1">(9) set -- </span><span class="s3">&quot;</span><span class="s4">$args0</span><span class="s3">&quot; &quot;</span><span class="s4">$args1</span><span class="s3">&quot; &quot;</span><span class="s4">$args2</span><span class="s3">&quot; &quot;</span><span class="s4">$args3</span><span class="s3">&quot; &quot;</span><span class="s4">$args4</span><span class="s3">&quot; &quot;</span><span class="s4">$args5</span><span class="s3">&quot; &quot;</span><span class="s4">$args6</span><span class="s3">&quot; &quot;</span><span class="s4">$args7</span><span class="s3">&quot; &quot;</span><span class="s4">$args8</span><span class="s3">&quot; </span><span class="s5">;;</span>
+    <span class="s5">esac</span>
+<span class="s5">fi</span>
+
+<span class="s2"># Escape application args</span>
+<span class="s1">save () {</span>
+    <span class="s5">for </span><span class="s1">i </span><span class="s5">do </span><span class="s1">printf %s\\n </span><span class="s3">&quot;</span><span class="s4">$i</span><span class="s3">&quot; </span><span class="s1">| sed </span><span class="s3">&quot;s/'/'\\\\''/g;1s/^/'/;\$s/\$/' \\\\/&quot; </span><span class="s1">; </span><span class="s5">done</span>
+    <span class="s1">echo </span><span class="s3">&quot; &quot;</span>
+<span class="s1">}</span>
+<span class="s1">APP_ARGS=</span><span class="s5">$</span><span class="s1">(save </span><span class="s3">&quot;</span><span class="s4">$@</span><span class="s3">&quot;</span><span class="s1">)</span>
+
+<span class="s2"># Collect all arguments for the java command, following the shell quoting and substitution rules</span>
+<span class="s6">eval </span><span class="s1">set -- </span><span class="s4">$DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS </span><span class="s3">&quot;\&quot;-Dorg.gradle.appname=</span><span class="s4">$APP_BASE_NAME</span><span class="s3">\&quot;&quot; </span><span class="s1">-classpath </span><span class="s3">&quot;\&quot;</span><span class="s4">$CLASSPATH</span><span class="s3">\&quot;&quot; </span><span class="s1">org.gradle.wrapper.GradleWrapperMain </span><span class="s3">&quot;</span><span class="s4">$APP_ARGS</span><span class="s3">&quot;</span>
+
+<span class="s2"># by default we should be in the correct project dir, but when run from Finder on Mac, the cwd is wrong</span>
+<span class="s5">if </span><span class="s1">[ </span><span class="s3">&quot;</span><span class="s5">$</span><span class="s1">(uname)</span><span class="s3">&quot; </span><span class="s1">= </span><span class="s3">&quot;Darwin&quot; </span><span class="s1">] </span><span class="s5">&amp;&amp; </span><span class="s1">[ </span><span class="s3">&quot;</span><span class="s4">$HOME</span><span class="s3">&quot; </span><span class="s1">= </span><span class="s3">&quot;</span><span class="s4">$PWD</span><span class="s3">&quot; </span><span class="s1">]; </span><span class="s5">then</span>
+  <span class="s1">cd </span><span class="s3">&quot;</span><span class="s5">$</span><span class="s1">(dirname </span><span class="s3">&quot;</span><span class="s4">$0</span><span class="s3">&quot;</span><span class="s1">)</span><span class="s3">&quot;</span>
+<span class="s5">fi</span>
+
+<span class="s1">exec </span><span class="s3">&quot;</span><span class="s4">$JAVACMD</span><span class="s3">&quot; &quot;</span><span class="s4">$@</span><span class="s3">&quot;</span>
+</pre>
+</body>
+</html>

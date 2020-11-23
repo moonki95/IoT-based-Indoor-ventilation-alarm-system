@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>ExampleInstrumentedTest.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #629755; font-weight: bold; font-style: italic;}
+.s4 { color: #77b767; font-style: italic;}
+.s5 { color: #808080;}
+.s6 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ExampleInstrumentedTest.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.arduino</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.content.Context</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.test.platform.app.InstrumentationRegistry</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.test.ext.junit.runners.AndroidJUnit4</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">org.junit.Test</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.junit.runner.RunWith</span><span class="s0">;</span>
+
+<span class="s0">import static </span><span class="s1">org.junit.Assert.*</span><span class="s0">;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Instrumented test, which will execute on an Android device.</span>
+ <span class="s2">*</span>
+ <span class="s2">* </span><span class="s3">@see </span><span class="s4">&lt;a href=&quot;http://d.android.com/tools/testing&quot;&gt;</span><span class="s2">Testing documentation</span><span class="s4">&lt;/a&gt;</span>
+ <span class="s2">*/</span>
+<span class="s1">@RunWith(AndroidJUnit4.</span><span class="s0">class</span><span class="s1">)</span>
+<span class="s0">public class </span><span class="s1">ExampleInstrumentedTest {</span>
+    <span class="s1">@Test</span>
+    <span class="s0">public void </span><span class="s1">useAppContext() {</span>
+        <span class="s5">// Context of the app under test.</span>
+        <span class="s1">Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext()</span><span class="s0">;</span>
+
+        <span class="s1">assertEquals(</span><span class="s6">&quot;com.example.arduino&quot;</span><span class="s0">, </span><span class="s1">appContext.getPackageName())</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>
