@@ -1,7 +1,7 @@
 package com.example.Android;
 
 public class OutdoorAir {
-    public static String sido;
+    public static String sido=null;
     public static String gungu;
     public static String dataTime;
     public static String PM10;
@@ -26,7 +26,8 @@ public class OutdoorAir {
     }
 
     public static String getSido(){
-        return sido;
+        if(sido==null) return null;
+        else return sido;
     }
     public static String getGungu(){
         return gungu;

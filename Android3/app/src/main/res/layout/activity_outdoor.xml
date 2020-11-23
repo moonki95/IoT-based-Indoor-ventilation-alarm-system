@@ -28,7 +28,7 @@
         android:layout_height="50dp"
         android:orientation="horizontal" >
 
-        ﻿<Spinner
+        <Spinner
         android:id="@+id/spinner_sido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

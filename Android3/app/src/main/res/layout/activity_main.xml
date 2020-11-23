@@ -27,7 +27,87 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal" >
+
+        <Spinner
+            android:id="@+id/spinner_sido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:id="@+id/spinner_gungu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
         <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="입력"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:text="위치" />
+
+        <TextView
+            android:id="@+id/textView_sido"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:textColor="#000"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:text="미세먼지" />
+
+        <TextView
+            android:id="@+id/textView_pm10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:textColor="#000"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:text="초미세먼지" />
+
+        <TextView
+            android:id="@+id/textView_pm25"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:textColor="#000"/>
+
+    </LinearLayout>
+        <!--<Button
                 android:id="@+id/indoor_btn"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
@@ -45,151 +125,10 @@
                 android:id="@+id/button3"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="Button" />-->
 
 
 
 
-
-<!--    <TextView-->
-<!--        android:id="@+id/textView_comp"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_marginTop="10dp" />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/button_sens"-->
-<!--        android:layout_width="150dp"-->
-<!--        android:layout_height="40dp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:background="@drawable/btn_design"-->
-<!--        android:textColor="#ffffff"-->
-<!--        android:text="실내 공기" />-->
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:layout_marginTop="20dp">-->
-
-<!--        <TextView-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:text="온도" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView_sens_temp"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:textColor="#000"/>-->
-
-<!--    </LinearLayout>-->
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:orientation="horizontal">-->
-
-<!--        <TextView-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:text="습도" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView_sens_humid"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:textColor="#000"/>-->
-
-<!--    </LinearLayout>-->
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:orientation="horizontal">-->
-
-<!--        <TextView-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:text="미세먼지" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView_sens_dust"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:textColor="#000"/>-->
-
-<!--    </LinearLayout>-->
-
-
-<!--    <Button-->
-<!--        android:id="@+id/button_api"-->
-<!--        android:layout_width="150dp"-->
-<!--        android:layout_height="40dp"-->
-<!--        android:layout_marginTop="80dp"-->
-<!--        android:background="@drawable/btn_design"-->
-<!--        android:textColor="#ffffff"-->
-<!--        android:text="실외 공기" />-->
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:layout_marginTop="20dp">-->
-
-<!--        <TextView-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:text="위치" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView_api_sido"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:textColor="#000"/>-->
-
-<!--    </LinearLayout>-->
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:orientation="horizontal">-->
-<!--        <TextView-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:text="미세먼지" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView_api_pm10"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:textColor="#000"/>-->
-
-<!--    </LinearLayout>-->
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:orientation="horizontal">-->
-<!--        <TextView-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:text="초미세먼지" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView_api_pm25"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:textColor="#000"/>-->
-
-<!--    </LinearLayout>-->
 
 </LinearLayout>
