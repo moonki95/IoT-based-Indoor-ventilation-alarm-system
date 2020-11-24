@@ -1,44 +1,25 @@
 package com.example.Android;
 
 
-import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.IOException;
 import java.lang.*;
 import java.net.URL;
-import java.util.List;
-import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -97,12 +78,11 @@ public class MainActivity extends AppCompatActivity {
 //        initAddressSpinner();
 
 
-        // 설정한 시군구가 있으면 계속 표시되게 하려고...
-//        if(outdoorAir.getSido()!=null){
-//            textViewSido.setText(outdoorAir.getSido()+" "+outdoorAir.getGungu());
-//            textViewPm10.setText(outdoorAir.getPM10()+" ㎍/㎥        "+ outdoorAir.getPM10Grade());
-//            textViewPm25.setText(outdoorAir.getPM25()+" ㎍/㎥        "+ outdoorAir.getPM25Grade());
-//        }
+         //설정한 시군구가 있으면 계속 표시되게 하려고...
+        if(outdoorAir.getSido()!=null){
+            GetXMLTask getXMLTask = new GetXMLTask();
+            getXMLTask.execute();
+        }
 
 
         /*Button okBtn = findViewById(R.id.btn_ok);
@@ -135,12 +115,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent;
         switch(item.getItemId()){
             case R.id.menu_outdoor:
-                intent=new Intent(this, PopupActivity.class);
+                intent=new Intent(this, OutdoorPopupActivity.class);
                 //intent.putExtra("data",sigungu);
                 startActivityForResult(intent,1);
                 break;
             case R.id.menu_indoor:
-                intent=new Intent(this, IndoorActivity.class);
+                intent=new Intent(this, IndoorPopupActivity.class);
                 startActivity(intent);
                 break;
         }

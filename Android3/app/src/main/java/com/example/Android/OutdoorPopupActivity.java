@@ -8,9 +8,8 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-public class PopupActivity extends Activity {
+public class OutdoorPopupActivity extends Activity {
 
     private Spinner spinnerSido, spinnerGungu;
     private ArrayAdapter<String> arrayAdapter;
@@ -22,7 +21,7 @@ public class PopupActivity extends Activity {
         super.onCreate(savedInstanceState);
         //타이틀바 없애기
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_popup);
+        setContentView(R.layout.activity_outdoor_popup);
 
         //스피너
         spinnerSido=(Spinner)findViewById(R.id.spinner_sido);

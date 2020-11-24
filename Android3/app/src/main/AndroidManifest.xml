@@ -24,12 +24,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".PopupActivity" android:theme="@android:style/Theme.Dialog"
-            android:label="팝업"/>
-        <activity android:name=".OutdoorActivity" android:parentActivityName=".MainActivity"
-            android:label="실외 공기"/>
-        <activity android:name=".IndoorActivity" android:parentActivityName=".MainActivity"
-            android:label="실내 공기"/>
+        <activity android:name=".OutdoorPopupActivity" android:theme="@android:style/Theme.Dialog"
+            android:label="측정소 선택 팝업"/>
+        <activity android:name=".IndoorPopupActivity" android:theme="@android:style/Theme.Dialog"
+            android:label="실내공기 팝업"/>
     </application>
 
 </manifest>

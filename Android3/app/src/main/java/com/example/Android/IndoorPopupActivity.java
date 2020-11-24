@@ -1,19 +1,24 @@
 package com.example.Android;
 
+import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class IndoorActivity extends AppCompatActivity {
+public class IndoorPopupActivity extends Activity {
+
     private static String IP_ADDRESS = "54.144.159.63";
     private static String TAG = "phptest";
 
@@ -26,11 +31,9 @@ public class IndoorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_indoor);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_indoor);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //타이틀바 없애기
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_indoor_popup);
 
 
         textViewTemp = (TextView) findViewById(R.id.textView_temp);
@@ -42,6 +45,13 @@ public class IndoorActivity extends AppCompatActivity {
         task.execute();
 
 
+    }
+
+    //확인 버튼 클릭
+    public void mOnClose(View v){
+
+        //액티비티(팝업) 닫기
+        finish();
     }
 
     class SelectDatabaseTask extends AsyncTask<Void, Void, String> {
@@ -105,86 +115,5 @@ public class IndoorActivity extends AppCompatActivity {
         }
     }
 
-    /*private class GetIndoorAirData extends AsyncTask<String, Void, String> {
 
-        ProgressDialog progressDialog;
-        String errorString = null;
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            String serverURL = params[0];
-            String postParameters = params[1];
-
-            try {
-                URL url = new URL(serverURL);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
-                httpURLConnection.setReadTimeout(5000);
-                httpURLConnection.setConnectTimeout(5000);
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoInput(true);
-                httpURLConnection.connect();
-
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                outputStream.write(postParameters.getBytes("UTF-8"));
-                outputStream.flush();
-                outputStream.close();
-
-                int responseStatusCode = httpURLConnection.getResponseCode();
-                Log.d(TAG, "response code - " + responseStatusCode);
-
-                InputStream inputStream;
-                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
-                    inputStream = httpURLConnection.getInputStream();
-                } else {
-                    inputStream = httpURLConnection.getErrorStream();
-                }
-
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-                StringBuilder sb = new StringBuilder();
-                String line;
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    sb.append(line);
-                }
-
-                bufferedReader.close();
-
-                return sb.toString().trim();
-
-            } catch (Exception e) {
-
-                Log.d(TAG, "GetData : Error ", e);
-                errorString = e.toString();
-
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            progressDialog.dismiss();
-
-            Log.d(TAG, "response - " + result);
-
-            if (result == null){
-
-                textViewTemp.setText(errorString);
-                textViewHumid.setText(errorString);
-                textViewDust.setText(errorString);
-            }
-            else {
-
-                mJsonString = result;
-                ShowIndoorAirData();
-
-            }
-        }
-
-    }*/
 }
