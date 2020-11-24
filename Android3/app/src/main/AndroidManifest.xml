@@ -24,6 +24,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".PopupActivity" android:theme="@android:style/Theme.Dialog"
+            android:label="팝업"/>
         <activity android:name=".OutdoorActivity" android:parentActivityName=".MainActivity"
             android:label="실외 공기"/>
         <activity android:name=".IndoorActivity" android:parentActivityName=".MainActivity"

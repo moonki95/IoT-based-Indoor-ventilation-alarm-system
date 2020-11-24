@@ -43,20 +43,22 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int GPS_ENABLE_REQUEST_CODE = 2001 ;
+  /*  private static final int GPS_ENABLE_REQUEST_CODE = 2001 ;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
-    String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+    String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};*/
 
-    private GpsTracker gpsTracker;
-    private Spinner spinnerSido, spinnerGungu;
-    private ArrayAdapter<String> arrayAdapter;
-    private String sido, gungu;
+//    private GpsTracker gpsTracker;
+//    private Spinner spinnerSido, spinnerGungu;
+//    private ArrayAdapter<String> arrayAdapter;
+
+    private String[] sigungu=new String[2];
 
     private TextView textViewSido;
     private TextView textViewPm10;
     private TextView textViewPm25;
 
     private OutdoorAir outdoorAir =new OutdoorAir();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,15 +69,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // 텍스트뷰
         textViewSido = (TextView) findViewById(R.id.textView_sido);
         textViewPm10 = (TextView) findViewById(R.id.textView_pm10);
         textViewPm25 = (TextView) findViewById(R.id.textView_pm25);
 
+       /* // GPS 접근 권한 확인???
         if (!checkLocationServicesStatus()) {
-
             showDialogForLocationServiceSetting();
         }else {
-
             checkRunTimePermission();
         }
 
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         double latitude = gpsTracker.getLatitude(); // 위도
         double longitude = gpsTracker.getLongitude(); //경도
         String address = getCurrentAddress(latitude, longitude);
-        textViewSido.setText(address);
+        textViewSido.setText(address);*/
 
 //        //스피너
 //        spinnerSido=(Spinner)findViewById(R.id.spinner_sido);
@@ -95,31 +97,78 @@ public class MainActivity extends AppCompatActivity {
 //        initAddressSpinner();
 
 
-        if(outdoorAir.getSido()!=null){
-            textViewSido.setText(outdoorAir.getSido()+" "+outdoorAir.getGungu());
-            textViewPm10.setText(outdoorAir.getPM10()+" ㎍/㎥        "+ outdoorAir.getPM10Grade());
-            textViewPm25.setText(outdoorAir.getPM25()+" ㎍/㎥        "+ outdoorAir.getPM25Grade());
-        }
-        Button okBtn = findViewById(R.id.btn_ok);
+        // 설정한 시군구가 있으면 계속 표시되게 하려고...
+//        if(outdoorAir.getSido()!=null){
+//            textViewSido.setText(outdoorAir.getSido()+" "+outdoorAir.getGungu());
+//            textViewPm10.setText(outdoorAir.getPM10()+" ㎍/㎥        "+ outdoorAir.getPM10Grade());
+//            textViewPm25.setText(outdoorAir.getPM25()+" ㎍/㎥        "+ outdoorAir.getPM25Grade());
+//        }
+
+
+        /*Button okBtn = findViewById(R.id.btn_ok);
         okBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
-//                sido=spinnerSido.getSelectedItem().toString();
-//                gungu=spinnerGungu.getSelectedItem().toString();
+                sido=spinnerSido.getSelectedItem().toString();
+                gungu=spinnerGungu.getSelectedItem().toString();
                 outdoorAir.setSido(sido);
                 outdoorAir.setGungu(gungu);
 
                 GetXMLTask task = new GetXMLTask();
                 task.execute();
             }
-        });
+        });*/
 
 
     }
 
-    public String getCurrentAddress( double latitude, double longitude) {
+    // 메뉴
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.menu_option,menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent;
+        switch(item.getItemId()){
+            case R.id.menu_outdoor:
+                intent=new Intent(this, PopupActivity.class);
+                //intent.putExtra("data",sigungu);
+                startActivityForResult(intent,1);
+                break;
+            case R.id.menu_indoor:
+                intent=new Intent(this, IndoorActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
+    // 팝업 spinner에서 시군구 데이터 받아오기
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                //데이터 받기
+                String[] result = data.getStringArrayExtra("result");
+                sigungu[0]=result[0];
+                sigungu[1]=result[1];
+                outdoorAir.setSido(sigungu[0]);
+                outdoorAir.setGungu(sigungu[1]);
+
+                GetXMLTask getXMLTask = new GetXMLTask();
+                getXMLTask.execute();
+                //getXMLTask.cancel(true);
+            }
+        }
+    }
+
+    /*// GPS
+    public String getCurrentAddress( double latitude, double longitude) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addresses;
         try {
@@ -228,95 +277,14 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-    }
-
-    private void initAddressSpinner() {
-        spinnerSido.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // 시군구, 동의 스피너를 초기화한다.
-                switch (position) {
-                    case 0:
-                        spinnerGungu.setAdapter(null);
-                        break;
-                    case 1:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_seoul);
-                        break;
-                    case 2:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_busan);
-                        break;
-                    case 3:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_daegu);
-                        break;
-                    case 4:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_incheon);
-                        break;
-                    case 5:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_gwangju);
-                        break;
-                    case 6:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_daejeon);
-                        break;
-                    case 7:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_ulsan);
-                        break;
-                    case 8:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_gyeonggi);
-                        break;
-                    case 9:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_gangwon);
-                        break;
-                    case 10:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_chung_buk);
-                        break;
-                    case 11:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_chung_nam);
-                        break;
-                    case 12:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_jeon_buk);
-                        break;
-                    case 13:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_jeon_nam);
-                        break;
-                    case 14:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_gyeong_buk);
-                        break;
-                    case 15:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_gyeong_nam);
-                        break;
-                    case 16:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_jeju);
-                        break;
-                    case 17:
-                        setGunguSpinnerAdapterItem(R.array.spinner_region_sejong);
-                        break;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-    }
-    private void setGunguSpinnerAdapterItem(int array_resource) {
-        if (arrayAdapter != null) {
-            spinnerGungu.setAdapter(null);
-            arrayAdapter = null;
-        }
-
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, (String[])getResources().getStringArray(array_resource));
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerGungu.setAdapter(arrayAdapter);
-    }
+    }*/
 
 
     private class GetXMLTask extends AsyncTask<Void, Void, String> {
 
         @Override
         protected String doInBackground(Void... voids) {
-            String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnMesureSidoLIst?serviceKey=8%2B64ddNqAnHmK8Lx8tI%2Bngxj6dtexb%2FhgwcSwsDjWb%2FbWSgRHUmNk9%2BtkAlqPCFcVb1QiMx49DQfXdMPHnNkzg%3D%3D&numOfRows=40&pageNo=1&sidoName="+sido+"&searchCondition=DAILY";
+            String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnMesureSidoLIst?serviceKey=8%2B64ddNqAnHmK8Lx8tI%2Bngxj6dtexb%2FhgwcSwsDjWb%2FbWSgRHUmNk9%2BtkAlqPCFcVb1QiMx49DQfXdMPHnNkzg%3D%3D&numOfRows=40&pageNo=1&sidoName="+sigungu[0]+"&searchCondition=DAILY";
             XmlPullParserFactory factory;
             XmlPullParser parser;
             URL xmlUrl;
@@ -350,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
 
                         case XmlPullParser.TEXT:
                             if(isCityName) {
-                                if(parser.getText().equals(gungu)){
+                                if(parser.getText().equals(sigungu[1])){
                                     flag=1;
                                 }
                                 isCityName=false;
@@ -365,7 +333,7 @@ public class MainActivity extends AppCompatActivity {
 
                         case XmlPullParser.END_TAG:
                             if (parser.getName().equals("item")&&flag==1) {
-                                textViewSido.setText(sido+" "+gungu);
+                                textViewSido.setText(sigungu[0]+" "+sigungu[1]);
                                 textViewPm10.setText(outdoorAir.getPM10()+" ㎍/㎥        "+ outdoorAir.getPM10Grade());
                                 textViewPm25.setText(outdoorAir.getPM25()+" ㎍/㎥        "+ outdoorAir.getPM25Grade());
 
@@ -385,47 +353,10 @@ public class MainActivity extends AppCompatActivity {
             return returnResult;
         }
 
-
-
         @Override
         protected void onPostExecute(String result) {
-
         }
-
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.menu_option,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Intent intent=null;
-        switch(item.getItemId()){
-            case R.id.menu_outdoor:
-
-                break;
-            case R.id.menu_indoor:
-                intent=new Intent(this, IndoorActivity.class);
-                startActivity(intent);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void clickIndoorBtn(View view){
-        Intent intent=new Intent(this, IndoorActivity.class);
-        startActivity(intent);
-    }
-
-    public void clickOutsideBtn(View view){
-        Intent intent=new Intent(this, OutdoorActivity.class);
-        startActivity(intent);
-    }
-
 
 
 
