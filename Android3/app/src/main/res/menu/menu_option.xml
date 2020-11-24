@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_outdoor"
+        android:title="다른 위치 확인"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/menu_indoor"
         android:title="실내공기 확인"
         app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/menu_weather"
-        android:title="날씨"
-        app:showAsAction="never"/>
+
 </menu>
