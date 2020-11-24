@@ -28,10 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};*/
 
-//    private GpsTracker gpsTracker;
-//    private Spinner spinnerSido, spinnerGungu;
-//    private ArrayAdapter<String> arrayAdapter;
-
     private String[] sigungu=new String[2];
 
     private TextView textViewSido;
@@ -68,39 +64,12 @@ public class MainActivity extends AppCompatActivity {
         String address = getCurrentAddress(latitude, longitude);
         textViewSido.setText(address);*/
 
-//        //스피너
-//        spinnerSido=(Spinner)findViewById(R.id.spinner_sido);
-//        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, (String[])getResources().getStringArray(R.array.spinner_region));
-//        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinnerSido.setAdapter(arrayAdapter);
-//
-//        spinnerGungu=(Spinner)findViewById(R.id.spinner_gungu);
-//        initAddressSpinner();
 
-
-         //설정한 시군구가 있으면 계속 표시되게 하려고...
+        /* //설정한 시군구가 있으면 계속 표시되게 하려고...
         if(outdoorAir.getSido()!=null){
             GetXMLTask getXMLTask = new GetXMLTask();
             getXMLTask.execute();
-        }
-
-
-        /*Button okBtn = findViewById(R.id.btn_ok);
-        okBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-
-                sido=spinnerSido.getSelectedItem().toString();
-                gungu=spinnerGungu.getSelectedItem().toString();
-                outdoorAir.setSido(sido);
-                outdoorAir.setGungu(gungu);
-
-                GetXMLTask task = new GetXMLTask();
-                task.execute();
-            }
-        });*/
-
-
+        }*/
     }
 
     // 메뉴
@@ -114,9 +83,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent intent;
         switch(item.getItemId()){
-            case R.id.menu_outdoor:
+            case R.id.menu_outdoor_current_position:
+                // 현재위치 측정해서 결과 표시
+                break;
+            case R.id.menu_outdoor_diff_region:
                 intent=new Intent(this, OutdoorPopupActivity.class);
-                //intent.putExtra("data",sigungu);
                 startActivityForResult(intent,1);
                 break;
             case R.id.menu_indoor:
@@ -127,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // 팝업 spinner에서 시군구 데이터 받아오기
+    // 다른 지역 실외공기 데이터 받아오기
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -142,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
 
                 GetXMLTask getXMLTask = new GetXMLTask();
                 getXMLTask.execute();
-                //getXMLTask.cancel(true);
             }
         }
     }
