@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private static String TAG = "phptest";
     private String url = "http://" + IP_ADDRESS + "/getjson.php";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -195,37 +196,29 @@ public class MainActivity extends AppCompatActivity {
     private void GetAirData(String mJsonString){
 
         String TAG_JSON="result";
-        String TAG_TEMP = "temp";
-        String TAG_HUMID ="humid";
         String TAG_DUST="dust";
-        String _temp = null;
-        String _humid=null;
         String _dust=null;
-
-        String title, text;
+        String text;
 
         try {
             JSONObject jsonObject = new JSONObject(mJsonString);
             JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
             JSONObject item = jsonArray.getJSONObject(0);
 
-            _temp = item.getString(TAG_TEMP);
-            _humid = item.getString(TAG_HUMID);
             _dust = item.getString(TAG_DUST);
 
             int dust = Integer.parseInt(_dust);
-            if (80 < dust && dust <= 120) {
-                text = "실내 공기가 약간나쁨이에요. 환기를 해보세요~";
+            if (80 < dust && dust <= 150) {
+                text = "실내 공기가 나쁨이에요. 환기를 시켜보세요~";
+                //Log.e("타이머",_dust);
                 createNotification(text);
             }
-            else if(dust > 120){
-                text = "실내 공기가 나쁨이에요. 환기가 필요해요!!";
+            else if(dust > 150){
+                text = "실내 공기가 매우나쁨이에요. 환기가 필요해요!!";
+                //Log.e("타이머",_dust);
                 createNotification(text);
             }
-
-
         } catch (JSONException e) {
-
             Log.d(TAG, "showResult : ", e);
         }
     }

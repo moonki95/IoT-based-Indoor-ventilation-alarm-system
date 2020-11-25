@@ -46,8 +46,8 @@ public class OutdoorAir {
         int pm10 = Integer.parseInt(PM10);
         if (pm10 <= 30) return"좋음";
         else if (pm10 <= 80) return "보통";
-        else if (pm10 <= 120) return "약간나쁨";
-        else return "나쁨";
+        else if (pm10 <= 150) return "나쁨";
+        else return "매우나쁨";
     }
     public static String getPM25Grade(){
         int pm25 = Integer.parseInt(PM25);

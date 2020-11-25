@@ -33,8 +33,8 @@ public class IndoorAir {
         int d = Integer.parseInt(dust);
         if (d <= 30) dustGrade = "좋음";
         else if (d <= 80) dustGrade = "보통";
-        else if (d <= 120) dustGrade = "약간나쁨";
-        else dustGrade = "나쁨";
+        else if (d <= 150) dustGrade = "나쁨";
+        else dustGrade = "매우나쁨";
         return dustGrade;
     }
 }
