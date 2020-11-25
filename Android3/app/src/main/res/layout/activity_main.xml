@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:background="#90C7E1"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <!--AppBarLayout : 액션바 영역-->
@@ -27,107 +28,107 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-   <!-- <LinearLayout
-        android:layout_width="match_parent"
+
+
+    <TextView
+        android:id="@+id/textView_sido"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="70dp"
+        android:textColor="#000"
+        android:layout_gravity="center_horizontal"
+        app:autoSizeTextType="uniform"/>
+    <TextView
+        android:id="@+id/textView_time"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:textColor="#000"
+        android:layout_gravity="center_horizontal"
+        app:autoSizeTextType="uniform"/>
+    <TextView
+        android:id="@+id/textView_pm10"
+        android:layout_width="120dp"
+        android:layout_height="85dp"
+        android:textColor="#000"
+        android:layout_gravity="center_horizontal"
+        app:autoSizeTextType="uniform"/>
+
+    <TextView
+        android:id="@+id/textView_grade"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:textColor="#000"
+        android:layout_gravity="center_horizontal"
+        app:autoSizeTextType="uniform"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textView_pm25"
+        android:layout_width="50dp"
         android:layout_height="50dp"
-        android:orientation="horizontal" >
+        android:textColor="#000"
+        android:layout_gravity="center_horizontal"
+        app:autoSizeTextType="uniform"/>
 
-        <Spinner
-            android:id="@+id/spinner_sido"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <Spinner
-            android:id="@+id/spinner_gungu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/btn_ok"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="입력"/>
-    </LinearLayout>-->
-
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:layout_marginTop="50dp">
 
-        <TextView
+        &lt;!&ndash;<TextView
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
-            android:text="위치" />
+            android:text="위치" />&ndash;&gt;
 
         <TextView
             android:id="@+id/textView_sido"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:textColor="#000"/>
+            android:textColor="#000"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
-        <TextView
+        &lt;!&ndash;<TextView
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
-            android:text="미세먼지" />
+            android:text="미세먼지" />&ndash;&gt;
 
         <TextView
             android:id="@+id/textView_pm10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:textColor="#000"/>
+            android:textColor="#000"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
-        <TextView
+        &lt;!&ndash;<TextView
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:text="초미세먼지" />
-
+&ndash;&gt;
         <TextView
             android:id="@+id/textView_pm25"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:textColor="#000"/>
+            android:textColor="#000"
+            android:layout_gravity="center"/>
 
-    </LinearLayout>
-        <!--<Button
-                android:id="@+id/indoor_btn"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:onClick="clickIndoorBtn"
-                android:text="실내공기" />
-
-            <Button
-                android:id="@+id/outside_btn"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:onClick="clickOutsideBtn"
-                android:text="실외공기" />
-
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="Button" />-->
-
-
+    </LinearLayout>-->
 
 
 

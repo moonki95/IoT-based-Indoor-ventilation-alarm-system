@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="#eeeeee"
     android:orientation="vertical"
-    android:layout_width="300dp"
+    android:layout_width="350dp"
     android:layout_height="wrap_content">
 
     // 타이틀바
@@ -10,28 +10,36 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
-            android:text="실내공기"
-            android:textSize="20sp"
-            android:textColor="#fff"
-            android:gravity="center"
-            android:background="#ff7a00"
             android:layout_width="match_parent"
-            android:layout_height="53dp" />
+            android:layout_height="53dp"
+            android:background="#2196F3"
+            android:gravity="center"
+            android:text="실내공기"
+            android:textColor="#fff"
+            android:textSize="20sp" />
     </LinearLayout>
     //end 타이틀바
-
-    //Notice
-    <LinearLayout
-        android:padding="24dp"
-        android:orientation="vertical"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="1dp"
+        android:background="#1B631E" />
+    //Notice
+
+    <!--
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#C3E1E4"
+        android:orientation="vertical"
+        android:padding="24dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="100dp"
@@ -44,13 +52,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:textColor="#000"/>
+                android:textColor="#000" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="50dp"
@@ -62,13 +72,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:textColor="#000"/>
+                android:textColor="#000" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="50dp"
@@ -80,18 +92,133 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:textColor="#000"/>
+                android:textColor="#000" />
 
         </LinearLayout>
 
 
     </LinearLayout>
     //end of Notice
+-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp">
+
+        <ImageView
+            android:id="@+id/textView_temp1"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:src="@drawable/tem"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/textView_temp1"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="온도"
+            android:textSize="10sp"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/textView_temp"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/text1"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textColor="#000" />
+
+        <ImageView
+            android:id="@+id/textView_humid1"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/textView_temp1"
+            android:gravity="center"
+            android:src="@drawable/hum"
+            android:text="습도"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/textView_humid1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="3dp"
+            android:text="습도"
+            android:textSize="10sp"
+            android:layout_toRightOf="@id/textView_temp"
+            android:gravity="center"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/textView_humid"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/text2"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/textView_temp"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textColor="#000" />
+
+        <ImageView
+            android:id="@+id/textView_dust1"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/textView_humid1"
+            android:gravity="center"
+            android:src="@drawable/dust"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/text3"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/textView_dust1"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@id/textView_humid"
+            android:gravity="center"
+            android:text="미세먼지"
+            android:textColor="#000"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/textView_dust"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/text3"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="21dp"
+            android:layout_toRightOf="@id/textView_humid"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textColor="#000" />
+
+    </RelativeLayout>
 
     <View
-        android:background="#66bdbdbd"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="1dp"
+        android:background="#1B631E" />
 
     //닫기 버튼
     <LinearLayout
@@ -99,19 +226,19 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Button
-            android:text="닫기"
-            android:textSize="15sp"
-            android:textColor="#ff7a00"
-            android:padding="16dp"
-            android:gravity="center"
-            android:background="#00000000"
             android:layout_width="match_parent"
             android:layout_height="53dp"
-            android:onClick="mOnClose"/>
+            android:background="#03A9F4"
+            android:gravity="center"
+            android:onClick="mOnClose"
+            android:padding="16dp"
+            android:text="닫기"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
     </LinearLayout>
     // end of 닫기 버튼
 
 </LinearLayout>
-
 

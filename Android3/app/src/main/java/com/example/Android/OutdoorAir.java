@@ -16,7 +16,7 @@ public class OutdoorAir {
         gungu=str;
     }
     public static void setDataTime(String str){
-        dataTime=str;
+        dataTime=str.substring(str.length()-5,str.length());
     }
     public static void setPM10(String pm10){
         PM10=pm10;

@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -44,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
     private String[] sigungu=new String[2];
 
     private TextView textViewSido;
+    private TextView textViewTime;
     private TextView textViewPm10;
+    private TextView textViewGrade;
     private TextView textViewPm25;
 
     private OutdoorAir outdoorAir =new OutdoorAir();
@@ -66,8 +69,16 @@ public class MainActivity extends AppCompatActivity {
 
         // 텍스트뷰
         textViewSido = (TextView) findViewById(R.id.textView_sido);
+        textViewTime= (TextView) findViewById(R.id.textView_time);
         textViewPm10 = (TextView) findViewById(R.id.textView_pm10);
+        textViewGrade=(TextView) findViewById(R.id.textView_grade);
         textViewPm25 = (TextView) findViewById(R.id.textView_pm25);
+
+        textViewSido.setGravity(Gravity.CENTER);
+        textViewTime.setGravity(Gravity.CENTER);
+        textViewPm10.setGravity(Gravity.CENTER);
+        textViewGrade.setGravity(Gravity.CENTER);
+        textViewPm25.setGravity(Gravity.CENTER);
 
         //타이머
         TimerTask tt= new TimerTask(){
@@ -250,7 +261,10 @@ public class MainActivity extends AppCompatActivity {
                     //<tag>text</tag>이므로 startTag뒤에 있는 text를 찾기위한 switch절
                     switch (eventType) {
                         case XmlPullParser.START_TAG:  //start tag가 다음 중 하나일 때 flag=true
-                            if (parser.getName().equals("cityName")) {
+                            if (parser.getName().equals("dataTime")){
+                                isdataTime=true;
+                            }
+                            else if (parser.getName().equals("cityName")) {
                                 isCityName = true;
                             } else if (parser.getName().equals("pm10Value")) {
                                 ispm10 = true;
@@ -260,7 +274,11 @@ public class MainActivity extends AppCompatActivity {
                             break;
 
                         case XmlPullParser.TEXT:
-                            if(isCityName) {
+                            if(isdataTime){
+                                outdoorAir.setDataTime(parser.getText());
+                                isdataTime=false;
+                            }
+                            else if(isCityName) {
                                 if(parser.getText().equals(sigungu[1])){
                                     flag=1;
                                 }
@@ -277,8 +295,11 @@ public class MainActivity extends AppCompatActivity {
                         case XmlPullParser.END_TAG:
                             if (parser.getName().equals("item")&&flag==1) {
                                 textViewSido.setText(sigungu[0]+" "+sigungu[1]);
-                                textViewPm10.setText(outdoorAir.getPM10()+" ㎍/㎥        "+ outdoorAir.getPM10Grade());
-                                textViewPm25.setText(outdoorAir.getPM25()+" ㎍/㎥        "+ outdoorAir.getPM25Grade());
+                                textViewTime.setText(outdoorAir.getDataTime());
+                                textViewGrade.setText(outdoorAir.getPM10Grade());
+                                textViewPm10.setText(outdoorAir.getPM10());
+
+                                //textViewPm25.setText(outdoorAir.getPM25()+" ㎍/㎥        "+ outdoorAir.getPM25Grade());
 
                                 check = 1;
                                 flag=0;
@@ -290,6 +311,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 textViewSido.setText("에러가 났습니다...");
+                textViewTime.setText("에러가 났습니다...");
                 textViewPm10.setText("에러가 났습니다...");
                 textViewPm25.setText("에러가 났습니다...");
             }
