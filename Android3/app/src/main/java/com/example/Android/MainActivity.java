@@ -1,20 +1,29 @@
 package com.example.Android;
 
 
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import android.util.Log;
 import android.view.Gravity;
@@ -22,6 +31,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import org.json.JSONArray;
@@ -30,17 +40,21 @@ import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.IOException;
 import java.lang.*;
 import java.net.URL;
+import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity {
 
-  /*  private static final int GPS_ENABLE_REQUEST_CODE = 2001 ;
+    private GpsTracker gpsTracker;
+    private static final int GPS_ENABLE_REQUEST_CODE = 2001 ;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
-    String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};*/
+    String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
     private String[] sigungu=new String[2];
 
@@ -62,6 +76,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // GPS 접근권한 확인
+        if (!checkLocationServicesStatus()) {
+            showDialogForLocationServiceSetting();
+        }
+        else {
+            checkRunTimePermission();
+        }
+        gpsTracker = new GpsTracker(MainActivity.this);
+        double latitude = gpsTracker.getLatitude(); // 위도
+        double longitude = gpsTracker.getLongitude(); //경도
+        String address = getCurrentAddress(latitude, longitude);
 
         //툴바
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -90,18 +116,7 @@ public class MainActivity extends AppCompatActivity {
         };
         timer.schedule(tt,0,5000);  //5초마다 실행
 
-       /* // GPS 접근 권한 확인???
-        if (!checkLocationServicesStatus()) {
-            showDialogForLocationServiceSetting();
-        }else {
-            checkRunTimePermission();
-        }
 
-        gpsTracker = new GpsTracker(MainActivity.this);
-        double latitude = gpsTracker.getLatitude(); // 위도
-        double longitude = gpsTracker.getLongitude(); //경도
-        String address = getCurrentAddress(latitude, longitude);
-        textViewSido.setText(address);*/
 
 
         /* //설정한 시군구가 있으면 계속 표시되게 하려고...
@@ -123,7 +138,13 @@ public class MainActivity extends AppCompatActivity {
         Intent intent;
         switch(item.getItemId()){
             case R.id.menu_outdoor_current_position:
-
+                gpsTracker = new GpsTracker(MainActivity.this);
+                double latitude = gpsTracker.getLatitude(); // 위도
+                double longitude = gpsTracker.getLongitude(); //경도
+                String address = getCurrentAddress(latitude, longitude);
+                Log.e("address",address);
+                Log.e("si",sigungu[0]);
+                Log.e("gungu",sigungu[1]);
                 break;
             case R.id.menu_outdoor_diff_region:
                 intent=new Intent(this, OutdoorPopupActivity.class);
@@ -141,18 +162,29 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
-                //데이터 받기
-                String[] result = data.getStringArrayExtra("result");
-                sigungu[0]=result[0];
-                sigungu[1]=result[1];
-                outdoorAir.setSido(sigungu[0]);
-                outdoorAir.setGungu(sigungu[1]);
+        switch(requestCode) {
+             case 1:    // 다른 지역 선택
+                if (resultCode == RESULT_OK) {
+                    //데이터 받기
+                    String[] result = data.getStringArrayExtra("result");
+                    sigungu[0] = result[0];
+                    sigungu[1] = result[1];
+                    outdoorAir.setSido(sigungu[0]);
+                    outdoorAir.setGungu(sigungu[1]);
 
-                GetXMLTask getXMLTask = new GetXMLTask();
-                getXMLTask.execute();
-            }
+                    GetXMLTask getXMLTask = new GetXMLTask();
+                    getXMLTask.execute();
+                }
+                break;
+            case GPS_ENABLE_REQUEST_CODE: //사용자가 GPS 활성 시켰는지 검사
+                if (checkLocationServicesStatus()) {
+                    if (checkLocationServicesStatus()) {
+                        Log.d("@@@", "onActivityResult : GPS 활성화 되있음");
+                        checkRunTimePermission();
+                        return;
+                    }
+                }
+                break;
         }
     }
 
@@ -313,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
                 textViewSido.setText("에러가 났습니다...");
                 textViewTime.setText("에러가 났습니다...");
                 textViewPm10.setText("에러가 났습니다...");
-                textViewPm25.setText("에러가 났습니다...");
+                //textViewPm25.setText("에러가 났습니다...");
             }
             return returnResult;
         }
@@ -323,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*// GPS
+    // GPS
     public String getCurrentAddress( double latitude, double longitude) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addresses;
@@ -346,8 +378,79 @@ public class MainActivity extends AppCompatActivity {
             return "주소 미발견";
         }
         Address address = addresses.get(0);
-        return address.getAddressLine(0).toString() + "\n";
+
+        String sido=address.getAdminArea().toString();
+        sigungu[0]=changeAddress(sido);
+        sigungu[1]=address.getLocality().toString();
+        outdoorAir.setSido(sigungu[0]);
+        outdoorAir.setGungu(sigungu[1]);
+
+        GetXMLTask getXMLTask = new GetXMLTask();
+        getXMLTask.execute();
+
+        return address.toString()+"\n";
+//        return address.getAddressLine(0).toString() + "\n";
     }
+    public String changeAddress(String s){
+        String sido;
+        switch(s){
+            case "서울특별시":
+                sido= "서울";
+                break;
+            case "부산광역시":
+                sido= "부산";
+                break;
+            case "대구광역시":
+                sido= "대구";
+                break;
+            case "인천광역시":
+                sido= "인천";
+                break;
+            case "광주광역시":
+                sido= "광주";
+                break;
+            case "대전광역시":
+                sido= "대전";
+                break;
+            case "울산광역시":
+                sido= "울산";
+                break;
+            case "경기도":
+                sido= "경기";
+                break;
+            case "강원도":
+                sido= "강원";
+                break;
+            case "충청북도":
+                sido= "충북";
+                break;
+            case "충청남도":
+                sido= "충남";
+                break;
+            case "전라북도":
+                sido= "전북";
+                break;
+            case "전라남도":
+                sido= "전남";
+                break;
+            case "경상북도":
+                sido= "경북";
+                break;
+            case "경상남도":
+                sido= "경남";
+                break;
+            case "제주도":
+                sido= "제주";
+                break;
+            case "세종특별시":
+                sido= "세종";
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + s);
+        }
+        return sido;
+    }
+    
     //여기부터는 GPS 활성화를 위한 메소드들
     private void showDialogForLocationServiceSetting() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -369,27 +472,58 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.create().show();
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case GPS_ENABLE_REQUEST_CODE: //사용자가 GPS 활성 시켰는지 검사
-                if (checkLocationServicesStatus()) {
-                    if (checkLocationServicesStatus()) {
-                        Log.d("@@@", "onActivityResult : GPS 활성화 되있음");
-                        checkRunTimePermission();
-                        return;
-                    }
-                }
-                break;
-        }
-    }
 
     public boolean checkLocationServicesStatus() {
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+    @Override
+    public void onRequestPermissionsResult(int permsRequestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grandResults) {
+
+        if ( permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
+
+            // 요청 코드가 PERMISSIONS_REQUEST_CODE 이고, 요청한 퍼미션 개수만큼 수신되었다면
+
+            boolean check_result = true;
+
+
+            // 모든 퍼미션을 허용했는지 체크합니다.
+
+            for (int result : grandResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    check_result = false;
+                    break;
+                }
+            }
+
+
+            if ( check_result ) {
+
+                //위치 값을 가져올 수 있음
+                ;
+            }
+            else {
+                // 거부한 퍼미션이 있다면 앱을 사용할 수 없는 이유를 설명해주고 앱을 종료합니다.2 가지 경우가 있습니다.
+
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0])
+                        || ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[1])) {
+
+                    Toast.makeText(MainActivity.this, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
+                    finish();
+
+
+                }else {
+
+                    Toast.makeText(MainActivity.this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+        }
     }
     void checkRunTimePermission(){
 
@@ -433,7 +567,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-    }*/
+    }
 
 //    private void WindowCtrl(String _pm10,String _dust){
 //        int pm10=Integer.parseInt(_pm10);
