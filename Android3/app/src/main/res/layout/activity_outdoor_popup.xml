@@ -37,7 +37,7 @@
             android:layout_marginBottom="10dp"
             android:layout_width="70dp"
             android:layout_height="20dp"
-            android:text="지역"
+            android:text="시도"
             android:gravity="center"
             android:textSize="15dp" />
 
@@ -56,7 +56,7 @@
             android:layout_width="70dp"
             android:layout_height="20dp"
             android:layout_toRightOf="@id/spinner_sido"
-            android:text="구"
+            android:text="시군구"
             android:gravity="center"
             android:textSize="15dp" />
         <Spinner

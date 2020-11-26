@@ -357,23 +357,22 @@ public class MainActivity extends AppCompatActivity {
                             }
                             else if (parser.getName().equals("cityName")) {
                                 isCityName = true;
-                            } else if (parser.getName().equals("pm10Value")) {
-                                ispm10 = true;
-                            } else if (parser.getName().equals("pm25Value")) {
-                                ispm25 = true;
+                            } else if (parser.getName().equals("so2Value")) {
+                                isso2 = true;
+                            }else if (parser.getName().equals("coValue")) {
+                                isco = true;
                             }
                             else if (parser.getName().equals("o3Value")) {
                                 iso3 = true;
                             }
-                            else if (parser.getName().equals("coValue")) {
-                                isco = true;
-                            }
                             else if (parser.getName().equals("no2Value")) {
                                 isno2 = true;
+                            }else if (parser.getName().equals("pm10Value")) {
+                                ispm10 = true;
+                            } else if (parser.getName().equals("pm25Value")) {
+                                ispm25 = true;
                             }
-                            else if (parser.getName().equals("so2Value")) {
-                                isso2 = true;
-                            }
+
 
                             break;
 
@@ -387,24 +386,24 @@ public class MainActivity extends AppCompatActivity {
                                     flag=1;
                                 }
                                 isCityName=false;
-                            }else if (ispm10) {
+                            }else if (isso2) {
+                                outdoorAir.setSo2(parser.getText());
+                                isso2 = false;
+                            }else if (isco) {
+                                outdoorAir.setCo(parser.getText());
+                                isco = false;
+                            }else if (iso3) {
+                                outdoorAir.setO3(parser.getText());
+                                iso3 = false;
+                            }else if (isno2) {
+                                outdoorAir.setNo2(parser.getText());
+                                isno2 = false;
+                            } else if (ispm10) {
                                 outdoorAir.setPM10(parser.getText());
                                 ispm10 = false;
                             } else if (ispm25) {
                                 outdoorAir.setPM25(parser.getText());
                                 ispm25 = false;
-                            }else if (iso3) {
-                                outdoorAir.setO3(parser.getText());
-                                iso3 = false;
-                            } else if (isco) {
-                                outdoorAir.setCo(parser.getText());
-                                isco = false;
-                            }else if (isno2) {
-                                outdoorAir.setNo2(parser.getText());
-                                isno2 = false;
-                            } else if (isso2) {
-                                outdoorAir.setSo2(parser.getText());
-                                isso2 = false;
                             }
                             break;
 
