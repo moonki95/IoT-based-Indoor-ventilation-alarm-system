@@ -30,6 +30,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,7 +65,21 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewTime;
     private TextView textViewPm10;
     private TextView textViewGrade;
-    private TextView textViewPm25;
+
+    ImageView imageView1;
+    ImageView imageView2;
+    ImageView imageView3;
+    ImageView imageView4;
+    ImageView imageView5;
+    ImageView imageView6;
+
+    private TextView grade1;
+    private TextView grade2;
+    private TextView grade3;
+    private TextView grade4;
+    private TextView grade5;
+    private TextView grade6;
+
     private TextView textViewBelowpm10;
     private TextView textViewBelowpm25;
     private TextView textViewo3;
@@ -102,6 +117,11 @@ public class MainActivity extends AppCompatActivity {
         double longitude = gpsTracker.getLongitude(); //경도
         String address = getCurrentAddress(latitude, longitude);
 
+        /*sigungu[0]="충북";
+        sigungu[1]="청주시";*/
+
+
+
         //툴바
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -111,7 +131,25 @@ public class MainActivity extends AppCompatActivity {
         textViewTime= (TextView) findViewById(R.id.textView_time);
         textViewPm10 = (TextView) findViewById(R.id.textView_pm10);
         textViewGrade=(TextView) findViewById(R.id.textView_grade);
-        textViewPm25 = (TextView) findViewById(R.id.textView_pm25);
+        textViewSido.setGravity(Gravity.CENTER);
+        textViewTime.setGravity(Gravity.CENTER);
+        textViewPm10.setGravity(Gravity.CENTER);
+        textViewGrade.setGravity(Gravity.CENTER);
+
+        imageView1=findViewById(R.id.dust2);
+        imageView2=findViewById(R.id.nano2);
+        imageView3=findViewById(R.id.ozone2);
+        imageView4=findViewById(R.id.co2);
+        imageView5=findViewById(R.id.no2);
+        imageView6=findViewById(R.id.so2);
+
+        grade1=findViewById(R.id.dust3);
+        grade2=findViewById(R.id.nano3);
+        grade3=findViewById(R.id.ozone3);
+        grade4=findViewById(R.id.co3);
+        grade5=findViewById(R.id.no3);
+        grade6=findViewById(R.id.so3);
+
         textViewBelowpm10=(TextView) findViewById(R.id.dust4);
         textViewBelowpm25=(TextView) findViewById(R.id.nano4);
         textViewo3=(TextView) findViewById(R.id.ozone4);
@@ -119,11 +157,7 @@ public class MainActivity extends AppCompatActivity {
         textViewno2=(TextView) findViewById(R.id.no4);
         textViewso2=(TextView) findViewById(R.id.so4);
 
-        textViewSido.setGravity(Gravity.CENTER);
-        textViewTime.setGravity(Gravity.CENTER);
-        textViewPm10.setGravity(Gravity.CENTER);
-        textViewGrade.setGravity(Gravity.CENTER);
-        textViewPm25.setGravity(Gravity.CENTER);
+
 
         mNow=System.currentTimeMillis();
         mDate=new Date(mNow);
@@ -171,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.menu_outdoor_diff_region:
                 intent=new Intent(this, OutdoorPopupActivity.class);
+                intent.putExtra("data",sigungu);
                 startActivityForResult(intent,1);
                 break;
             case R.id.menu_indoor:
@@ -254,12 +289,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            GetAirData(s); // 파서로 전체 출력
+            GetIndoorAirData(s); // 파서로 전체 출력
         }
     }
 
 
-    private void GetAirData(String mJsonString){
+    private void GetIndoorAirData(String mJsonString){
 
         String TAG_JSON="result";
         String TAG_DUST="dust";
@@ -352,22 +387,22 @@ public class MainActivity extends AppCompatActivity {
                                     flag=1;
                                 }
                                 isCityName=false;
-                            }else if (ispm10&&flag==1) {
+                            }else if (ispm10) {
                                 outdoorAir.setPM10(parser.getText());
                                 ispm10 = false;
-                            } else if (ispm25&&flag==1) {
+                            } else if (ispm25) {
                                 outdoorAir.setPM25(parser.getText());
                                 ispm25 = false;
-                            }else if (iso3&&flag==1) {
+                            }else if (iso3) {
                                 outdoorAir.setO3(parser.getText());
                                 iso3 = false;
-                            } else if (isco&&flag==1) {
+                            } else if (isco) {
                                 outdoorAir.setCo(parser.getText());
                                 isco = false;
-                            }else if (isno2&&flag==1) {
+                            }else if (isno2) {
                                 outdoorAir.setNo2(parser.getText());
                                 isno2 = false;
-                            } else if (isso2&&flag==1) {
+                            } else if (isso2) {
                                 outdoorAir.setSo2(parser.getText());
                                 isso2 = false;
                             }
@@ -379,6 +414,11 @@ public class MainActivity extends AppCompatActivity {
                                 textViewTime.setText(outdoorAir.getDataTime());
                                 textViewGrade.setText(outdoorAir.getPM10Grade());
                                 textViewPm10.setText(outdoorAir.getPM10());
+
+                                //grade, 이미지
+                                setGrade();
+
+                                //below 농도
                                 textViewBelowpm10.setText(outdoorAir.getPM10());
                                 textViewBelowpm25.setText(outdoorAir.getPM25());
                                 textViewo3.setText(outdoorAir.getO3());
@@ -386,7 +426,6 @@ public class MainActivity extends AppCompatActivity {
                                 textViewno2.setText(outdoorAir.getNo2());
                                 textViewso2.setText(outdoorAir.getSo2());
 
-                                //textViewPm25.setText(outdoorAir.getPM25()+" ㎍/㎥        "+ outdoorAir.getPM25Grade());
 
                                 check = 1;
                                 flag=0;
@@ -410,6 +449,148 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void setGrade(){
+        float o3, co, no2, so2;
+
+        if(outdoorAir.getO3().equals("-")){
+            o3=-1;
+        }
+        else
+        if(outdoorAir.getCo().equals("-")){
+            co=-1;
+        }
+        if(outdoorAir.getNo2().equals("-")){
+            no2=-1;
+        }
+        if(outdoorAir.getSo2().equals("-")){
+            so2=-1;
+        }
+        int pm10=Integer.parseInt(outdoorAir.getPM10());
+        int pm25=Integer.parseInt(outdoorAir.getPM25());
+        o3=Float.parseFloat(outdoorAir.getO3());
+        co=Float.parseFloat(outdoorAir.getCo());
+        no2=Float.parseFloat(outdoorAir.getNo2());
+        so2=Float.parseFloat(outdoorAir.getSo2());
+
+        if (pm10 <= 30) {
+            grade1.setText("좋음");
+            imageView1.setImageResource(R.drawable.cloud1);
+        }
+        else if (pm10 <= 80) {
+            grade1.setText("보통");
+            imageView1.setImageResource(R.drawable.cloud2);
+        }
+        else if (pm10 <= 150) {
+            grade1.setText("나쁨");
+            imageView1.setImageResource(R.drawable.cloud3);
+        }
+        else {
+            grade1.setText("매우나쁨");
+            imageView1.setImageResource(R.drawable.cloud4);
+        }
+
+        if (pm25 <= 15) {
+            grade2.setText("좋음");
+            imageView2.setImageResource(R.drawable.cloud1);
+        }
+        else if (pm25 <= 50) {
+            grade2.setText("보통");
+            imageView2.setImageResource(R.drawable.cloud2);
+        }
+        else if (pm25 <= 100) {
+            grade2.setText("나쁨");
+            imageView2.setImageResource(R.drawable.cloud3);
+        }
+        else {
+            grade2.setText("매우나쁨");
+            imageView2.setImageResource(R.drawable.cloud4);
+        }
+
+        //오존
+        if(o3==-1){
+            grade3.setText("-");
+        }
+        else if (o3 <= 0.03) {
+            grade3.setText("좋음");
+            imageView3.setImageResource(R.drawable.cloud1);
+        }
+        else if (o3 <= 0.09) {
+            grade3.setText("보통");
+            imageView3.setImageResource(R.drawable.cloud2);
+        }
+        else if (o3 <= 0.15) {
+            grade3.setText("나쁨");
+            imageView3.setImageResource(R.drawable.cloud3);
+        }
+        else {
+            grade3.setText("매우나쁨");
+            imageView3.setImageResource(R.drawable.cloud4);
+        }
+
+        //일산화탄소
+        if(co==-1){
+            grade4.setText("-");
+        }
+        else if (co <= 2) {
+            grade4.setText("좋음");
+            imageView4.setImageResource(R.drawable.cloud1);
+        }
+        else if (co <= 9) {
+            grade4.setText("보통");
+            imageView4.setImageResource(R.drawable.cloud2);
+        }
+        else if (co <= 15) {
+            grade4.setText("나쁨");
+            imageView4.setImageResource(R.drawable.cloud3);
+        }
+        else {
+            grade4.setText("매우나쁨");
+            imageView4.setImageResource(R.drawable.cloud4);
+        }
+
+        //이산화질소
+        if(no2==-1){
+            grade5.setText("-");
+        }
+        else if (no2 <= 0.02) {
+            grade5.setText("좋음");
+            imageView5.setImageResource(R.drawable.cloud1);
+        }
+        else if (no2 <= 0.05) {
+            grade5.setText("보통");
+            imageView5.setImageResource(R.drawable.cloud2);
+        }
+        else if (no2 <= 0.15) {
+            grade5.setText("나쁨");
+            imageView5.setImageResource(R.drawable.cloud3);
+        }
+        else {
+            grade5.setText("매우나쁨");
+            imageView5.setImageResource(R.drawable.cloud4);
+        }
+
+        //아황산가스
+        if(so2==-1){
+            grade6.setText("-");
+        }
+        else if (so2 <= 0.03) {
+            grade6.setText("좋음");
+            imageView6.setImageResource(R.drawable.cloud1);
+        }
+        else if (so2 <= 0.06) {
+            grade6.setText("보통");
+            imageView6.setImageResource(R.drawable.cloud2);
+        }
+        else if (so2 <= 0.2) {
+            grade6.setText("나쁨");
+            imageView6.setImageResource(R.drawable.cloud3);
+        }
+        else {
+            grade6.setText("매우나쁨");
+            imageView6.setImageResource(R.drawable.cloud4);
+        }
+
+    }
     // GPS
     public String getCurrentAddress( double latitude, double longitude) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());

@@ -25,82 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#1B631E" />
+
     //Notice
-
-    <!--
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#C3E1E4"
-        android:orientation="vertical"
-        android:padding="24dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:text="온도" />
-
-            <TextView
-                android:id="@+id/textView_temp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:textColor="#000" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:text="습도" />
-
-            <TextView
-                android:id="@+id/textView_humid"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:textColor="#000" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:text="미세먼지" />
-
-            <TextView
-                android:id="@+id/textView_dust"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:textColor="#000" />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-    //end of Notice
--->
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -165,7 +91,7 @@
             android:textColor="#000" />
 
         <TextView
-            android:id="@+id/text5"
+            android:id="@+id/textView_humidgrade"
             android:layout_width="100dp"
             android:layout_height="20dp"
             android:layout_marginTop="3dp"
@@ -173,7 +99,6 @@
             android:layout_toRightOf="@id/textView_temp"
             android:layout_below="@id/textView_humid1"
             android:gravity="center"
-            android:text="좋음"
             android:textSize="17sp"
             android:textColor="#000" />
 
@@ -202,7 +127,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/text6"
+            android:id="@+id/textView_dustgrade"
             android:layout_width="100dp"
             android:layout_height="20dp"
             android:layout_marginTop="3dp"

@@ -62,13 +62,6 @@
         app:autoSizeTextType="uniform"
         android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/textView_pm25"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:textColor="#000"
-        android:layout_gravity="center_horizontal"
-        app:autoSizeTextType="uniform"/>
 
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -99,6 +92,7 @@
                 android:gravity="center"
                 android:id="@+id/dust2"
                 android:layout_below="@id/dust1"
+                android:src="@drawable/cloud1"
                 />
 
             <TextView
@@ -140,6 +134,7 @@
                 android:layout_toRightOf="@id/dust1"
                 android:layout_below="@id/nano1"
                 android:layout_marginLeft="30dp"
+                android:src="@drawable/cloud1"
                 />
 
             <TextView
@@ -186,6 +181,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_toRightOf="@id/nano1"
                 android:id="@+id/ozone2"
+                android:src="@drawable/cloud1"
                 />
 
             <TextView
@@ -232,6 +228,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_toRightOf="@id/ozone1"
                 android:id="@+id/co2"
+                android:src="@drawable/cloud1"
                 />
 
             <TextView
@@ -278,6 +275,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_toRightOf="@id/co1"
                 android:id="@+id/no2"
+                android:src="@drawable/cloud1"
                 />
 
             <TextView
@@ -324,7 +322,8 @@
                 android:gravity="center"
                 android:layout_marginLeft="30dp"
                 android:layout_toRightOf="@id/no1"
-                android:id="@+id/so2" />
+                android:id="@+id/so2"
+                android:src="@drawable/cloud1"/>
 
             <TextView
                 android:layout_width="150dip"

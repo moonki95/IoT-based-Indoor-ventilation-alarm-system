@@ -14,7 +14,7 @@ public class OutdoorPopupActivity extends Activity {
     private Spinner spinnerSido, spinnerGungu;
     private ArrayAdapter<String> arrayAdapter;
     
-    //private String[] data;
+    private String[] data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +34,23 @@ public class OutdoorPopupActivity extends Activity {
 
 
 
-        /*//데이터 가져오기
+        //데이터 가져오기
         Intent intent = getIntent();
-        data = intent.getStringArrayExtra("data");*/
+        data = intent.getStringArrayExtra("data");
 
     }
 
     //확인 버튼 클릭
     public void mOnClose(View v){
         String[] sigungu = new String[2];
-        sigungu[0]=spinnerSido.getSelectedItem().toString();
-        sigungu[1]=spinnerGungu.getSelectedItem().toString();
+        if(spinnerSido.getSelectedItem().equals("")){
+            sigungu[0]=data[0];
+            sigungu[1]=data[1];
+        }
+        else {
+            sigungu[0] = spinnerSido.getSelectedItem().toString();
+            sigungu[1] = spinnerGungu.getSelectedItem().toString();
+        }
 
         //데이터 전달하기
         Intent intent = new Intent();

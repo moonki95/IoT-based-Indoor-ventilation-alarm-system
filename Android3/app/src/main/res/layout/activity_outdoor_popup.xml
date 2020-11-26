@@ -31,19 +31,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/sigun"
+            android:layout_marginLeft="31dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="70dp"
+            android:layout_height="20dp"
+            android:text="지역"
+            android:gravity="center"
+            android:textSize="15dp" />
+
         <Spinner
             android:id="@+id/spinner_sido"
             android:layout_width="131dp"
             android:layout_height="29dp"
             android:layout_weight="1"
+            android:layout_below="@id/sigun"
             android:background="#BFD8EC" />
 
+        <TextView
+            android:id="@+id/gu"
+            android:layout_marginLeft="70dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="70dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@id/spinner_sido"
+            android:text="구"
+            android:gravity="center"
+            android:textSize="15dp" />
         <Spinner
             android:id="@+id/spinner_gungu"
             android:layout_width="131dp"
             android:layout_height="29dp"
             android:layout_marginLeft="47dp"
             android:layout_toRightOf="@id/spinner_sido"
+            android:layout_below="@id/gu"
             android:layout_weight="1"
             android:background="#BFD8EC" />
     </RelativeLayout>

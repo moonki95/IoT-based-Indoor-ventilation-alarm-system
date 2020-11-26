@@ -17,6 +17,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class IndoorPopupActivity extends Activity {
 
     private static String IP_ADDRESS = "54.144.159.63";
@@ -25,8 +28,11 @@ public class IndoorPopupActivity extends Activity {
     private TextView textViewTemp;
     private TextView textViewHumid;
     private TextView textViewDust;
+    private TextView textViewHumidGrade;
+    private TextView textViewDustGrade;
 
     private IndoorAir indoorAir =new IndoorAir();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,8 @@ public class IndoorPopupActivity extends Activity {
         textViewTemp = (TextView) findViewById(R.id.textView_temp);
         textViewHumid = (TextView) findViewById(R.id.textView_humid);
         textViewDust = (TextView) findViewById(R.id.textView_dust);
+        textViewHumidGrade=findViewById(R.id.textView_humidgrade);
+        textViewDustGrade=findViewById(R.id.textView_dustgrade);
 
         String url="http://" + IP_ADDRESS + "/getjson.php";
         SelectDatabaseTask task = new SelectDatabaseTask(url, null);
@@ -107,7 +115,18 @@ public class IndoorPopupActivity extends Activity {
 
             textViewTemp.setText(_temp + " °C");
             textViewHumid.setText(_humid + " %");
-            textViewDust.setText(_dust + " ㎍/㎥    ");
+            textViewDust.setText(_dust);
+
+            int dust=Integer.parseInt(_dust);
+            if (dust <= 30) textViewDustGrade.setText("좋음");
+            else if (dust <= 80) textViewDustGrade.setText("보통");
+            else if (dust <= 150) textViewDustGrade.setText("나쁨");
+            else textViewDustGrade.setText("매우나쁨");
+
+            int humid=Integer.parseInt(_humid);
+            if(humid<40 ) textViewHumidGrade.setText("건조");
+            else if(humid>70) textViewHumidGrade.setText("습함");
+            else textViewHumidGrade.setText("적정");
 
         } catch (JSONException e) {
 
