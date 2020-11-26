@@ -6,6 +6,10 @@ public class OutdoorAir {
     public static String dataTime;
     public static String PM10;
     public static String PM25;
+    public static String o3;
+    public static String co;
+    public static String no2;
+    public static String so2;
     public static String PM10Grade;
     public static String PM25Grade;
 
@@ -18,11 +22,19 @@ public class OutdoorAir {
     public static void setDataTime(String str){
         dataTime=str.substring(str.length()-5,str.length());
     }
-    public static void setPM10(String pm10){
-        PM10=pm10;
+    public static void setPM10(String s){
+        PM10=s;
     }
-    public static void setPM25(String pm25){
-        PM25=pm25;
+    public static void setPM25(String s){
+        PM25=s;
+    }
+    public static void setO3(String s){  o3=s;   }
+    public static void setCo(String s){ co=s;    }
+    public static void setNo2(String s){
+        no2=s;
+    }
+    public static void setSo2(String s){
+        so2=s;
     }
 
     public static String getSido(){
@@ -40,6 +52,18 @@ public class OutdoorAir {
     }
     public static String getPM25( ){
        return PM25;
+    }
+    public static String getO3( ){
+        return o3;
+    }
+    public static String getCo( ){
+        return co;
+    }
+    public static String getNo2( ){
+        return no2;
+    }
+    public static String getSo2( ){
+        return so2;
     }
     public static String getPM10Grade() {
 

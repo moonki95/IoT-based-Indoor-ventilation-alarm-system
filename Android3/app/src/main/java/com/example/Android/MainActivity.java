@@ -43,6 +43,8 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.lang.*;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
@@ -63,14 +65,25 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewPm10;
     private TextView textViewGrade;
     private TextView textViewPm25;
+    private TextView textViewBelowpm10;
+    private TextView textViewBelowpm25;
+    private TextView textViewo3;
+    private TextView textViewco;
+    private TextView textViewno2;
+    private TextView textViewso2;
 
     private OutdoorAir outdoorAir =new OutdoorAir();
 
-    private Timer timer=new Timer();
+    private Timer timer_indoor=new Timer();
+    private Timer timer_outdoor=new Timer();
     private static String IP_ADDRESS = "54.144.159.63";
     private static String TAG = "phptest";
     private String url = "http://" + IP_ADDRESS + "/getjson.php";
 
+    long mNow;
+    Date mDate;
+    SimpleDateFormat mFormat=new SimpleDateFormat("mm");
+    String currTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +112,12 @@ public class MainActivity extends AppCompatActivity {
         textViewPm10 = (TextView) findViewById(R.id.textView_pm10);
         textViewGrade=(TextView) findViewById(R.id.textView_grade);
         textViewPm25 = (TextView) findViewById(R.id.textView_pm25);
+        textViewBelowpm10=(TextView) findViewById(R.id.dust4);
+        textViewBelowpm25=(TextView) findViewById(R.id.nano4);
+        textViewo3=(TextView) findViewById(R.id.ozone4);
+        textViewco=(TextView) findViewById(R.id.co4);
+        textViewno2=(TextView) findViewById(R.id.no4);
+        textViewso2=(TextView) findViewById(R.id.so4);
 
         textViewSido.setGravity(Gravity.CENTER);
         textViewTime.setGravity(Gravity.CENTER);
@@ -106,24 +125,28 @@ public class MainActivity extends AppCompatActivity {
         textViewGrade.setGravity(Gravity.CENTER);
         textViewPm25.setGravity(Gravity.CENTER);
 
+        mNow=System.currentTimeMillis();
+        mDate=new Date(mNow);
+        currTime=mFormat.format(mDate);
+
         //타이머
-        TimerTask tt= new TimerTask(){
+        TimerTask tt_indoor= new TimerTask(){
             @Override
             public void run() {
+                //실내공기데이터 가져와서 나쁨이면 알람
                 SelectDatabaseTask task = new SelectDatabaseTask(url, null);
                 task.execute();
+
+                //시간이 바뀌면 실외공기데이터 다시 뿌리기
+                if(currTime.equals("00")){
+                    GetOutdoorDataTask getOutdoorDataTask = new GetOutdoorDataTask();
+                    getOutdoorDataTask.execute();
+                }
             }
         };
-        timer.schedule(tt,0,5000);  //5초마다 실행
+        timer_indoor.schedule(tt_indoor,0,5000);  //5초마다 실행
 
 
-
-
-        /* //설정한 시군구가 있으면 계속 표시되게 하려고...
-        if(outdoorAir.getSido()!=null){
-            GetXMLTask getXMLTask = new GetXMLTask();
-            getXMLTask.execute();
-        }*/
     }
 
     // 메뉴
@@ -172,8 +195,8 @@ public class MainActivity extends AppCompatActivity {
                     outdoorAir.setSido(sigungu[0]);
                     outdoorAir.setGungu(sigungu[1]);
 
-                    GetXMLTask getXMLTask = new GetXMLTask();
-                    getXMLTask.execute();
+                    GetOutdoorDataTask getOutdoorDataTask = new GetOutdoorDataTask();
+                    getOutdoorDataTask.execute();
                 }
                 break;
             case GPS_ENABLE_REQUEST_CODE: //사용자가 GPS 활성 시켰는지 검사
@@ -266,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class GetXMLTask extends AsyncTask<Void, Void, String> {
+    private class GetOutdoorDataTask extends AsyncTask<Void, Void, String> {
 
         @Override
         protected String doInBackground(Void... voids) {
@@ -276,7 +299,8 @@ public class MainActivity extends AppCompatActivity {
             URL xmlUrl;
             String returnResult = "";
 
-            boolean isdataTime = false, isCityName = false, ispm10 = false, ispm25 = false;
+            boolean isdataTime = false, isCityName = false, ispm10 = false, ispm25 = false
+                    , iso3 = false, isco = false, isno2 = false, isso2 = false;
 
             try {
                 int flag = 0;
@@ -303,6 +327,19 @@ public class MainActivity extends AppCompatActivity {
                             } else if (parser.getName().equals("pm25Value")) {
                                 ispm25 = true;
                             }
+                            else if (parser.getName().equals("o3Value")) {
+                                iso3 = true;
+                            }
+                            else if (parser.getName().equals("coValue")) {
+                                isco = true;
+                            }
+                            else if (parser.getName().equals("no2Value")) {
+                                isno2 = true;
+                            }
+                            else if (parser.getName().equals("so2Value")) {
+                                isso2 = true;
+                            }
+
                             break;
 
                         case XmlPullParser.TEXT:
@@ -321,6 +358,18 @@ public class MainActivity extends AppCompatActivity {
                             } else if (ispm25&&flag==1) {
                                 outdoorAir.setPM25(parser.getText());
                                 ispm25 = false;
+                            }else if (iso3&&flag==1) {
+                                outdoorAir.setO3(parser.getText());
+                                iso3 = false;
+                            } else if (isco&&flag==1) {
+                                outdoorAir.setCo(parser.getText());
+                                isco = false;
+                            }else if (isno2&&flag==1) {
+                                outdoorAir.setNo2(parser.getText());
+                                isno2 = false;
+                            } else if (isso2&&flag==1) {
+                                outdoorAir.setSo2(parser.getText());
+                                isso2 = false;
                             }
                             break;
 
@@ -330,6 +379,12 @@ public class MainActivity extends AppCompatActivity {
                                 textViewTime.setText(outdoorAir.getDataTime());
                                 textViewGrade.setText(outdoorAir.getPM10Grade());
                                 textViewPm10.setText(outdoorAir.getPM10());
+                                textViewBelowpm10.setText(outdoorAir.getPM10());
+                                textViewBelowpm25.setText(outdoorAir.getPM25());
+                                textViewo3.setText(outdoorAir.getO3());
+                                textViewco.setText(outdoorAir.getCo());
+                                textViewno2.setText(outdoorAir.getNo2());
+                                textViewso2.setText(outdoorAir.getSo2());
 
                                 //textViewPm25.setText(outdoorAir.getPM25()+" ㎍/㎥        "+ outdoorAir.getPM25Grade());
 
@@ -385,8 +440,8 @@ public class MainActivity extends AppCompatActivity {
         outdoorAir.setSido(sigungu[0]);
         outdoorAir.setGungu(sigungu[1]);
 
-        GetXMLTask getXMLTask = new GetXMLTask();
-        getXMLTask.execute();
+        GetOutdoorDataTask getOutdoorDataTask = new GetOutdoorDataTask();
+        getOutdoorDataTask.execute();
 
         return address.toString()+"\n";
 //        return address.getAddressLine(0).toString() + "\n";

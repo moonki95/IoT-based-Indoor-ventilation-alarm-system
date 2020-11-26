@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="#eeeeee"
     android:orientation="vertical"
-    android:layout_width="300dp"
+    android:layout_width="350dp"
     android:layout_height="wrap_content">
 
     // 타이틀바
@@ -10,61 +10,69 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:text="지역 선택"
-            android:textSize="20sp"
-            android:textColor="#fff"
-            android:gravity="center"
-            android:background="#ff7a00"
-            android:layout_width="match_parent"
-            android:layout_height="53dp" />
-    </LinearLayout>
-     //end 타이틀바
 
-     //Notice
-    <LinearLayout
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:background="#2196F3"
+            android:gravity="center"
+            android:text="지역 선택"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+    </LinearLayout>
+    //end 타이틀바
+
+    //Notice
+    <RelativeLayout
         android:padding="24dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Spinner
             android:id="@+id/spinner_sido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_width="131dp"
+            android:layout_height="29dp"
+            android:layout_weight="1"
+            android:background="#BFD8EC" />
 
         <Spinner
             android:id="@+id/spinner_gungu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-    </LinearLayout>
-     //end of Notice
+            android:layout_width="131dp"
+            android:layout_height="29dp"
+            android:layout_marginLeft="47dp"
+            android:layout_toRightOf="@id/spinner_sido"
+            android:layout_weight="1"
+            android:background="#BFD8EC" />
+    </RelativeLayout>
+    //end of Notice
 
     <View
         android:background="#66bdbdbd"
         android:layout_width="match_parent"
         android:layout_height="1dp" />
 
-     //닫기 버튼
+    //닫기 버튼
     <LinearLayout
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Button
-            android:text="확인"
-            android:textSize="15sp"
-            android:textColor="#ff7a00"
-            android:padding="16dp"
-            android:gravity="center"
-            android:background="#00000000"
             android:layout_width="match_parent"
             android:layout_height="53dp"
-            android:onClick="mOnClose"/>
+            android:background="#2196F3"
+            android:gravity="center"
+            android:onClick="mOnClose"
+            android:padding="16dp"
+            android:text="확인"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
     </LinearLayout>
     // end of 닫기 버튼
 
 </LinearLayout>
-
 

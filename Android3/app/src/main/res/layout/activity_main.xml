@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#90C7E1"
+    android:background="@drawable/background"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".MainActivity">
@@ -22,7 +22,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="#2196F3"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
         <!--//Toolbar-->
     </com.google.android.material.appbar.AppBarLayout>
@@ -33,7 +33,7 @@
     <TextView
         android:id="@+id/textView_sido"
         android:layout_width="100dp"
-        android:layout_height="20dp"
+        android:layout_height="30dp"
         android:layout_marginTop="70dp"
         android:textColor="#000"
         android:layout_gravity="center_horizontal"
@@ -41,13 +41,13 @@
     <TextView
         android:id="@+id/textView_time"
         android:layout_width="100dp"
-        android:layout_height="20dp"
+        android:layout_height="30dp"
         android:textColor="#000"
         android:layout_gravity="center_horizontal"
         app:autoSizeTextType="uniform"/>
     <TextView
         android:id="@+id/textView_pm10"
-        android:layout_width="120dp"
+        android:layout_width="130dp"
         android:layout_height="85dp"
         android:textColor="#000"
         android:layout_gravity="center_horizontal"
@@ -70,66 +70,286 @@
         android:layout_gravity="center_horizontal"
         app:autoSizeTextType="uniform"/>
 
-    <!--<LinearLayout
+    <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:layout_marginTop="50dp">
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="100dp"
+        >
 
-        &lt;!&ndash;<TextView
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:text="위치" />&ndash;&gt;
-
-        <TextView
-            android:id="@+id/textView_sido"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:textColor="#000"
-            android:layout_gravity="center"/>
+            android:orientation="horizontal"
+            >
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-        &lt;!&ndash;<TextView
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:text="미세먼지" />&ndash;&gt;
+            <TextView
+                android:id="@+id/dust1"
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:text="미세먼지"
+                android:textSize="18dp" />
 
-        <TextView
-            android:id="@+id/textView_pm10"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:textColor="#000"
-            android:layout_gravity="center"/>
+            <ImageView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:id="@+id/dust2"
+                android:layout_below="@id/dust1"
+                />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-        &lt;!&ndash;<TextView
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:text="초미세먼지" />
-&ndash;&gt;
-        <TextView
-            android:id="@+id/textView_pm25"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:textColor="#000"
-            android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:id="@+id/dust3"
+                android:layout_below="@id/dust2"
+                android:textSize="18dp"
+                />
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:id="@+id/dust4"
+                android:textSize="18dp"
+                android:layout_below="@id/dust3"
+                />
 
-    </LinearLayout>-->
+            <TextView
+                android:layout_width="150dip"
+                android:id="@+id/nano1"
+                android:layout_height="50dp"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:layout_toRightOf="@id/dust1"
+                android:layout_marginLeft="30dp"
+                android:text="초미세먼지" />
 
+            <ImageView
+                android:layout_width="150dip"
+                android:id="@+id/nano2"
+                android:layout_height="50dp"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:layout_toRightOf="@id/dust1"
+                android:layout_below="@id/nano1"
+                android:layout_marginLeft="30dp"
+                />
+
+            <TextView
+                android:layout_width="150dip"
+                android:id="@+id/nano3"
+                android:layout_height="50dp"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:layout_toRightOf="@id/dust1"
+                android:layout_below="@id/nano2"
+                android:layout_marginLeft="30dp"
+                android:textSize="18dp"
+                />
+
+            <TextView
+                android:layout_width="150dip"
+                android:id="@+id/nano4"
+                android:layout_height="50dp"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:layout_toRightOf="@id/dust1"
+                android:layout_below="@id/nano3"
+                android:layout_marginLeft="30dp"
+                android:textSize="18dp"
+                />
+
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:background="#EBF5F6"
+                android:layout_toRightOf="@id/nano1"
+                android:gravity="center"
+                android:id="@+id/ozone1"
+                android:layout_marginLeft="30dp"
+                android:textSize="18dp"
+                android:text="오존" />
+
+            <ImageView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:layout_below="@id/ozone1"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/nano1"
+                android:id="@+id/ozone2"
+                />
+
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:layout_below="@id/ozone2"
+                android:id="@+id/ozone3"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/nano1"
+                android:textSize="18dp"
+                />
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:layout_below="@id/ozone3"
+                android:id="@+id/ozone4"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/nano1"
+                android:textSize="18dp"
+                />
+
+
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:background="#EBF5F6"
+                android:layout_toRightOf="@id/ozone1"
+                android:gravity="center"
+                android:id="@+id/co1"
+                android:layout_marginLeft="30dp"
+                android:textSize="18dp"
+                android:text="일산화탄소" />
+
+            <ImageView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:layout_below="@id/co1"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/ozone1"
+                android:id="@+id/co2"
+                />
+
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:layout_below="@id/co2"
+                android:id="@+id/co3"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/ozone1"
+                />
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:layout_below="@id/co3"
+                android:id="@+id/co4"
+                android:background="#EBF5F6"
+                android:textSize="18dp"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/ozone1"
+                />
+
+
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:background="#EBF5F6"
+                android:layout_toRightOf="@id/co1"
+                android:gravity="center"
+                android:id="@+id/no1"
+                android:layout_marginLeft="30dp"
+                android:textSize="18dp"
+                android:text="이산화질소" />
+
+            <ImageView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:layout_below="@id/no1"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/co1"
+                android:id="@+id/no2"
+                />
+
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:layout_below="@id/no2"
+                android:id="@+id/no3"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/co1"
+                android:textSize="18dp"
+                />
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:layout_below="@id/no3"
+                android:id="@+id/no4"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/co1"
+                android:textSize="18dp"
+                />
+
+
+
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:background="#EBF5F6"
+                android:layout_toRightOf="@id/no1"
+                android:gravity="center"
+                android:id="@+id/so1"
+                android:layout_marginLeft="30dp"
+                android:textSize="18dp"
+                android:text="아황산질소" />
+
+            <ImageView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:layout_below="@id/no1"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/no1"
+                android:id="@+id/so2" />
+
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:layout_below="@id/so2"
+                android:id="@+id/so3"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:textSize="18dp"
+                android:layout_toRightOf="@id/no1" />
+            <TextView
+                android:layout_width="150dip"
+                android:layout_height="50dp"
+                android:layout_below="@id/so3"
+                android:id="@+id/so4"
+                android:background="#EBF5F6"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:textSize="18dp"
+                android:layout_toRightOf="@id/no1"
+                />
+        </RelativeLayout>
+
+    </HorizontalScrollView>
 
 
 </LinearLayout>

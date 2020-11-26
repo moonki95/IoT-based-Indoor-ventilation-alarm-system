@@ -104,36 +104,35 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp">
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp">
 
         <ImageView
             android:id="@+id/textView_temp1"
             android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="70dp"
+            android:layout_below="@id/text1"
+            android:layout_marginTop="3dp"
             android:layout_marginLeft="10dp"
             android:gravity="center"
-            android:src="@drawable/tem"
-            android:textSize="15sp" />
+            android:src="@drawable/tem" />
 
         <TextView
             android:id="@+id/text1"
             android:layout_width="100dp"
             android:layout_height="20dp"
-            android:layout_below="@id/textView_temp1"
             android:layout_marginTop="3dp"
             android:layout_marginLeft="10dp"
             android:gravity="center"
             android:text="온도"
-            android:textSize="10sp"
+            android:textSize="17sp"
             android:textColor="#000" />
 
         <TextView
             android:id="@+id/textView_temp"
             android:layout_width="100dp"
             android:layout_height="80dp"
-            android:layout_below="@id/text1"
+            android:layout_below="@id/textView_temp1"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             android:gravity="center"
@@ -141,11 +140,12 @@
             android:textColor="#000" />
 
         <ImageView
+            android:layout_below="@id/text2"
             android:id="@+id/textView_humid1"
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="3dp"
             android:layout_toRightOf="@id/textView_temp1"
             android:gravity="center"
             android:src="@drawable/hum"
@@ -156,20 +156,32 @@
             android:id="@+id/text2"
             android:layout_width="100dp"
             android:layout_height="20dp"
-            android:layout_below="@id/textView_humid1"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="3dp"
             android:text="습도"
-            android:textSize="10sp"
+            android:textSize="17sp"
             android:layout_toRightOf="@id/textView_temp"
             android:gravity="center"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/text5"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/textView_temp"
+            android:layout_below="@id/textView_humid1"
+            android:gravity="center"
+            android:text="좋음"
+            android:textSize="17sp"
             android:textColor="#000" />
 
         <TextView
             android:id="@+id/textView_humid"
             android:layout_width="100dp"
             android:layout_height="80dp"
-            android:layout_below="@id/text2"
+            android:layout_below="@id/textView_humid1"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@id/textView_temp"
@@ -178,36 +190,49 @@
             android:textColor="#000" />
 
         <ImageView
+            android:layout_below="@id/text3"
             android:id="@+id/textView_dust1"
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="12dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="3dp"
             android:layout_toRightOf="@id/textView_humid1"
             android:gravity="center"
             android:src="@drawable/dust"
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/text6"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/textView_humid"
+            android:layout_below="@id/textView_humid1"
+            android:gravity="center"
+            android:text="좋음"
+            android:textSize="17sp"
+            android:textColor="#000" />
+
+        <TextView
             android:id="@+id/text3"
             android:layout_width="100dp"
             android:layout_height="20dp"
-            android:layout_below="@id/textView_dust1"
             android:layout_marginLeft="11dp"
             android:layout_marginTop="2dp"
             android:layout_toRightOf="@id/textView_humid"
             android:gravity="center"
             android:text="미세먼지"
             android:textColor="#000"
-            android:textSize="10sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/textView_dust"
             android:layout_width="100dp"
             android:layout_height="80dp"
-            android:layout_below="@id/text3"
+            android:layout_below="@id/textView_dust1"
             android:layout_marginLeft="14dp"
-            android:layout_marginTop="21dp"
+            android:layout_marginTop="20dp"
             android:layout_toRightOf="@id/textView_humid"
             android:gravity="center"
             android:textSize="20dp"

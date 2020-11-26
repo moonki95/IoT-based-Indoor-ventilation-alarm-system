@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".MainActivity"
-            android:label="IoT 알람 시스템"
+            android:label="IoT 실내환기알람 시스템"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
